@@ -37,7 +37,10 @@ $result = $conn->query($sql);
     </style>
 </head>
 <body>
-
+    <div class="w3-container w3-padding w3-light-grey w3-right-align">
+        <span>Bem-vindo, <?php echo $_SESSION["user_email"]; ?>!</span>
+        <a href="logout.php" class="w3-button w3-red">Sair</a>
+    </div>
     <div class="container">
         <h1>Lista de Locais</h1>
         

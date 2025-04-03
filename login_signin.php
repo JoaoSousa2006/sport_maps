@@ -1,18 +1,53 @@
 <?php
-if (isset($_POST['submit'])) {
-    include_once ('conexao.php');
+session_start();
+include_once('conexao.php');
 
-    $name = $_POST['compname'];
-    $email = $_POST['username']; // Mantendo 'username' no formulário, mas o campo é EmailUser
-    $password = $_POST['password'];
-    
-    // Inserção com os nomes corretos do banco de dados
-    $result = mysqli_query($connection, "INSERT INTO tblUsers (NameUser, EmailUser, PasswordUser) VALUES ('$name', '$email', '$password')");
-    
-    header('location:logcad.php');
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $email = $_POST["username"];
+    $password = $_POST["password"];
+
+    if (isset($_POST['compname'])) {
+        // Cadastro de usuário
+        $name = $_POST["compname"];
+        $userType = isset($_POST["adm"]) ? "admin" : "normal";
+
+        $sql = "INSERT INTO tblUsers (NameUser, EmailUser, PasswordUser, UserType) VALUES (?, ?, ?, ?)";
+        $stmt = mysqli_prepare($conn, $sql);
+        mysqli_stmt_bind_param($stmt, "ssss", $name, $email, $password, $userType);
+
+        if (mysqli_stmt_execute($stmt)) {
+            $_SESSION["user_id"] = mysqli_insert_id($conn);
+            $_SESSION["user_email"] = $email;
+            $_SESSION["user_type"] = $userType;
+
+            header("Location: locais.php");
+            exit();
+        } else {
+            echo "<script>alert('Erro ao cadastrar!');</script>";
+        }
+    } else {
+        // Login de usuário
+        $sql = "SELECT * FROM tblUsers WHERE EmailUser = ? AND PasswordUser = ?";
+        $stmt = mysqli_prepare($conn, $sql);
+        mysqli_stmt_bind_param($stmt, "ss", $email, $password);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+
+        if ($user = mysqli_fetch_assoc($result)) {
+            $_SESSION["user_id"] = $user["idUser"];
+            $_SESSION["user_email"] = $user["EmailUser"];
+            $_SESSION["user_type"] = $user["UserType"];
+
+            header("Location: locais.php");
+            exit();
+        } else {
+            echo "<script>alert('Email ou senha incorretos!');</script>";
+        }
+    }
 }
-?><!doctype html>
+?>
 
+<!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
@@ -65,10 +100,9 @@ if (isset($_POST['submit'])) {
         <div class="card" id="card">
             <div class="card-side card-front w3-center w3-padding">
                 <h4>Log In</h4>
-                <form action="test_login.php" method="post">
+                <form action="logcad.php" method="post">
                     <input class="w3-input w3-border w3-margin-bottom" type="text" name="username" placeholder="E-mail" required>
                     <input class="w3-input w3-border" type="password" name="password" placeholder="Senha" required><br>
-                    <input type="checkbox" id="adm" name="adm" value="1"><label for="adm">Sou administrador</label><br>
                     <button class="w3-button w3-blue w3-margin-top" type="submit">Entrar</button>
                 </form>
                 <p class="w3-margin-top">Não tem conta? <span class="toggle-btn" onclick="flipCard()">Cadastre-se</span></p>
@@ -78,17 +112,19 @@ if (isset($_POST['submit'])) {
                 <form action="logcad.php" method="post">
                     <input class="w3-input w3-border w3-margin-bottom" type="text" name="compname" placeholder="Nome Completo" required>
                     <input class="w3-input w3-border w3-margin-bottom" type="text" name="username" placeholder="E-mail" required>
-                    <input class="w3-input w3-border" type="password" name="password" placeholder="Senha" required>
+                    <input class="w3-input w3-border" type="password" name="password" placeholder="Senha" required><br>
+                    <input type="checkbox" id="adm" name="adm" value="1"><label for="adm">Sou administrador</label><br>
                     <button class="w3-button w3-green w3-margin-top" type="submit">Cadastrar</button>
                 </form>
                 <p class="w3-margin-top">Já tem conta? <span class="toggle-btn" onclick="flipCard()">Entre</span></p>
             </div>
         </div>
-    </div><script>
-    function flipCard() {
-        document.getElementById('card').classList.toggle('flipped');
-    }
-</script>
+    </div>
 
+    <script>
+        function flipCard() {
+            document.getElementById('card').classList.toggle('flipped');
+        }
+    </script>
 </body>
 </html>

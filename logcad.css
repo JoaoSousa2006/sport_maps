@@ -1,0 +1,116 @@
+:root {
+  --primary-color: #ffff6a;
+  --secondary-color: #000000;
+  --bg-color: #24373f;
+  --text-color: #b1b1cf;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 300;
+  line-height: 1.7;
+  color: var(--text-color);
+  background: var(--bg-color);
+  overflow-x: hidden;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.checkbox:checked+label, .checkbox:not(:checked)+label {
+  position: relative;
+  display: block;
+  width: 60px;
+  height: 16px;
+  border-radius: 8px;
+  margin: 10px auto;
+  cursor: pointer;
+  background-color: #b5bcdd;
+}
+
+.checkbox:checked+label:before, .checkbox:not(:checked)+label:before {
+  position: absolute;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: #1B2735;
+  border: solid 1px #2a2f4b;
+  font-family: 'unicons';
+  content: '\eb4f';
+  z-index: 20;
+  top: -10px;
+  left: -10px;
+  line-height: 36px;
+  text-align: center;
+  font-size: 24px;
+  transition: all 0.5s ease;
+  will-change: transform;
+}
+
+.checkbox:checked+label:before {
+  transform: translateX(44px) rotate(-270deg);
+}
+
+.card-3d-wrap {
+  position: relative;
+  width: 440px;
+  height: 400px;
+  perspective: 800px;
+}
+
+.card-3d-wrapper {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  transition: all 600ms ease-out;
+}
+
+.card-front, .card-back {
+  width: 100%;
+  height: 100%;
+  background-color: #333742;
+  position: absolute;
+  border-radius: 6px;
+}
+
+.card-back {
+  transform: rotateY(180deg);
+}
+
+.checkbox:checked ~ .card-3d-wrap .card-3d-wrapper {
+  transform: rotateY(180deg);
+}
+
+.center-wrap {
+  position: absolute;
+  width: 100%;
+  padding: 0 35px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 20;
+}
+
+.btn {
+  border-radius: 4px;
+  height: 44px;
+  font-size: 13px;
+  font-weight: 800;
+  text-transform: uppercase;
+  padding: 0 30px;
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.btn:hover {
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
+}

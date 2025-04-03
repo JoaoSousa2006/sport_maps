@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <title>Cadastrar local</title>
+	<style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            padding: 20px;
+            background: white;
+            box-shadow: 0px 0px 10px gray;
+            border-radius: 8px;
+            text-align: left;
+        }
+        input, select {
+            padding: 10px;
+            margin: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        a {
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+	<form name= "cadastro" method = "post" action="gravar.php">
+		<b><u> <h1> Cadastro de Locais </u></b></h1>
+	<p>
+		<div class="container">
+			<fieldset>
+				<legend>DADOS DO LOCAL</legend>
+					<label> NOME:</label>  
+					<input name="txt_nome" type="text" value="" size="50">
+					
+					<label> ENDEREÇO:</label> 
+					<input name="txt_endereco" type="text" value="" required="yes" maxlength="110"  size="110"><br>
+					
+					<label> ESPAÇO:</label>
+					<select name="txt_espaco">
+						<option value="ArLivre"> Ao ar livre </option>
+						<option value="Coberto"> Área coberta </option>
+						<option value="Misto"> Mista </option>
+					</select>
+
+                    <label> FAIXA DE PREÇO:</label>  
+					<select name="txt_preco">
+						<option value="Gratis"> Entrada Gratuita </option>
+						<option value=""> </option>
+						<option value=""> </option>
+					</select><br>
+
+                    <label> ATIVIDADES RECOMENDADAS:</label><br>
+                    <form name="txt_atividades">
+                        <input type = "checkbox" id="ciclismo" value="ciclismo"><label>Ciclismo</label><br>
+                        <input type = "checkbox" id="skate" value="skate"><label>Skateboard</label><br>
+                        <input type = "checkbox" id="patinacao" value="patinacao"><label>Patinação</label><br>
+                        <input type = "checkbox" id="corrida" value="corrida"><label>Corrida</label><br>
+                        <input type = "checkbox" id="quadra" value="quadra"><label>Esportes de quadra</label><br>
+                    </form>
+
+
+			</fieldset><p>
+		</div>
+        <br>
+        <button type="submit" value="Cadastrar" onclick="document.forml.action = 'gravar.php'">Cadastrar</button><br><br> &nbsp; &nbsp; &nbsp; &nbsp;
+		<a href="locais.php"> VIZUALIZAR</a> <br>
+	    
+</body>
+</html>

@@ -28,6 +28,7 @@ CREATE TABLE tblPlaces (
     PhonePlace VARCHAR(20) NULL,
     LatPlace VARCHAR(3),
     LongPlace VARCHAR(3),
+    PricePlace DOUBLE(5),
     SportType ENUM('biking', 'skating', 'roller skating', 'running', 'court', 'sports') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 

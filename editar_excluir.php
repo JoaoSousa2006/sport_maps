@@ -3,11 +3,9 @@ session_start();
 include_once("conexao.php");
 
 // Verifica se o usuário é administrador
-if (!isset($_SESSION['admin']) || $_SESSION['admin'] !== true) {
-    echo "<script>alert('Acesso negado!'); window.location.href='locais.php';</script>";
-    exit();
+if (!isset($_SESSION['nivel_acesso']) || $_SESSION['nivel_acesso'] != 1) {
+    die("Acesso negado.");
 }
-
 // Editar Local
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['editar'])) {
     $id = $_POST['id'];

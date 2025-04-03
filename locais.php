@@ -1,22 +1,25 @@
 <?php
-//Conecta ao banco e verifica a conexão.
-include_once("conexao.php");
 session_start();
+include_once("conexao.php");
 
-// Verifica se o usuário é administrador
-$is_admin = isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin';
+// Verifica se o usuário está logado e pega o nível de acesso
+$nivel_acesso = isset($_SESSION['nivel_acesso']) ? $_SESSION['nivel_acesso'] : 0;
 
 // Verifica se foi feita uma pesquisa
-$search_query = "";
+$where = "1=1"; // Condição padrão
+
 if (!empty($_GET['search'])) {
     $data = $_GET['search'];
-    $search_query = "WHERE Nome LIKE '%$data%' OR Endereco LIKE '%$data%' OR Preco LIKE '%$data%' OR Atividades LIKE '%$data%'";
+    $where .= " AND (nome LIKE '%$data%' OR endereco LIKE '%$data%' OR faixa_preco LIKE '%$data%' OR esportes LIKE '%$data%')";
 }
 
-//Consulta SQL com todos os locais
-$sql = "SELECT * FROM locais $search_query ORDER BY id DESC;";
+// Consulta SQL com filtros aplicados
+$sql = "SELECT * FROM locais WHERE $where ORDER BY id DESC;";
 $result = $conn->query($sql);
-?><!DOCTYPE html><html lang="pt-br">
+?>
+
+<!DOCTYPE html>
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -30,46 +33,55 @@ $result = $conn->query($sql);
         table { width: 100%; margin-top: 20px; border-collapse: collapse; }
         th, td { padding: 10px; border: 1px solid #ddd; }
         th { background: #007bff; color: white; }
+        a { color: #fff; text-decoration: none; }
     </style>
 </head>
 <body>
+
     <div class="container">
         <h1>Lista de Locais</h1>
+        
         <form method="GET">
-            <input type="text" name="search" placeholder="Buscar local..." >
+            <input type="text" name="search" placeholder="Buscar por nome, endereço, faixa de preço ou esportes...">
             <button type="submit">Buscar</button>
         </form>
+
         <table>
             <tr>
-                <th>Nome</th>
+                <th>Local</th>
                 <th>Endereço</th>
-                <th>Espaço</th>
                 <th>Faixa de Preço</th>
-                <th>Atividades</th>
-                <?php if ($is_admin) echo '<th>Ações</th>'; ?>
+                <th>Esportes</th>
+                <?php if ($nivel_acesso == 1) echo "<th>Ações</th>"; ?>
             </tr>
+
             <?php
             if ($result->num_rows > 0) {
-                while ($row = $result->fetch_assoc()) {
+                while ($local = mysqli_fetch_assoc($result)) {
                     echo "<tr>";
-                    echo "<td>{$row['Nome']}</td>";
-                    echo "<td>{$row['Endereco']}</td>";
-                    echo "<td>{$row['Espaco']}</td>";
-                    echo "<td>{$row['Preco']}</td>";
-                    echo "<td>{$row['Atividades']}</td>";
-                    if ($is_admin) {
+                    echo "<td>" . htmlspecialchars($local['nome']) . "</td>";
+                    echo "<td>" . htmlspecialchars($local['endereco']) . "</td>";
+                    echo "<td>" . htmlspecialchars($local['faixa_preco']) . "</td>";
+                    echo "<td>" . htmlspecialchars($local['esportes']) . "</td>";
+                    
+                    // Exibir botões de edição e exclusão apenas para admins
+                    if ($nivel_acesso == 1) {
                         echo "<td>
-                            <a href='editar_excluir.php?edit={$row['id']}'>Editar</a> |
-                            <a href='editar_excluir.php?delete={$row['id']}' onclick='return confirm('Tem certeza que deseja excluir este local?')'>Excluir</a>
+                            <button><a href='editar.php?id={$local['id']}'>Editar</a></button>
+                            <form method='POST' action='excluir.php' style='display:inline;' onsubmit='return confirm(\"Tem certeza que deseja excluir este local?\")'>
+                                <input type='hidden' name='excluir_id' value='{$local['id']}'>
+                                <button type='submit'>Excluir</button>
+                            </form>
                         </td>";
                     }
                     echo "</tr>";
                 }
             } else {
-                echo "<tr><td colspan='6'>Nenhum local encontrado.</td></tr>";
+                echo "<tr><td colspan='5'>Nenhum local encontrado.</td></tr>";
             }
             ?>
         </table>
     </div>
+
 </body>
 </html>

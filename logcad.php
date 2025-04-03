@@ -1,19 +1,18 @@
-<?PHP
+<?php
 if (isset($_POST['submit'])) {
+    include_once ('conexao.php');
 
-  include_once ('conexao.php');
-
-  $name = $_POST['compname'];
-  $user = $_POST['username'];
-  $pass = $_POST['password'];
-
-
-  $result = mysqli_query($connection, "INSERT INTO users (id,comp_name,user_name,pass_word) VALUES (NULL, '$name', '$user', '$pass')");
-  header('location:logcad.php');
+    $name = $_POST['compname'];
+    $email = $_POST['username']; // Mantendo 'username' no formulário, mas o campo é EmailUser
+    $password = $_POST['password'];
+    
+    // Inserção com os nomes corretos do banco de dados
+    $result = mysqli_query($connection, "INSERT INTO tblUsers (NameUser, EmailUser, PasswordUser) VALUES ('$name', '$email', '$password')");
+    
+    header('location:logcad.php');
 }
-?>
+?><!doctype html>
 
-<!doctype html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
@@ -67,30 +66,29 @@ if (isset($_POST['submit'])) {
             <div class="card-side card-front w3-center w3-padding">
                 <h4>Log In</h4>
                 <form action="test_login.php" method="post">
-                    <input class="w3-input w3-border w3-margin-bottom" type="text" name="username" placeholder="Usuário" required>
+                    <input class="w3-input w3-border w3-margin-bottom" type="text" name="username" placeholder="E-mail" required>
                     <input class="w3-input w3-border" type="password" name="password" placeholder="Senha" required><br>
-                    <input type = "checkbox" id="adm" value="adm"><label>Sou adiministrador</label><br>
-                    <button class="w3-button w3-blue w3-margin-top" type="submit" onclick="document.forml.action = 'gravar.php'">Entrar</button>
+                    <input type="checkbox" id="adm" name="adm" value="1"><label for="adm">Sou administrador</label><br>
+                    <button class="w3-button w3-blue w3-margin-top" type="submit">Entrar</button>
                 </form>
                 <p class="w3-margin-top">Não tem conta? <span class="toggle-btn" onclick="flipCard()">Cadastre-se</span></p>
             </div>
             <div class="card-side card-back w3-center w3-padding">
                 <h4>Sign Up</h4>
                 <form action="logcad.php" method="post">
-                    <input class="w3-input w3-border w3-margin-bottom" type="text" name="compname" placeholder="Full Name" required>
-                    <input class="w3-input w3-border w3-margin-bottom" type="text" name="username" placeholder="User Name" required>
-                    <input class="w3-input w3-border" type="password" name="password" placeholder="Password" required>
-                    <button class="w3-button w3-green w3-margin-top" type="submit" onclick="document.forml.action = 'gravar.php'">Sign Up</button>
+                    <input class="w3-input w3-border w3-margin-bottom" type="text" name="compname" placeholder="Nome Completo" required>
+                    <input class="w3-input w3-border w3-margin-bottom" type="text" name="username" placeholder="E-mail" required>
+                    <input class="w3-input w3-border" type="password" name="password" placeholder="Senha" required>
+                    <button class="w3-button w3-green w3-margin-top" type="submit">Cadastrar</button>
                 </form>
                 <p class="w3-margin-top">Já tem conta? <span class="toggle-btn" onclick="flipCard()">Entre</span></p>
             </div>
         </div>
-    </div>
+    </div><script>
+    function flipCard() {
+        document.getElementById('card').classList.toggle('flipped');
+    }
+</script>
 
-    <script>
-        function flipCard() {
-            document.getElementById('card').classList.toggle('flipped');
-        }
-    </script>
 </body>
 </html>

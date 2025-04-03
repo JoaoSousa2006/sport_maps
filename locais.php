@@ -60,7 +60,7 @@ $result = $conn->query($sql);
                     if ($is_admin) {
                         echo "<td>
                             <a href='editar_excluir.php?edit={$row['id']}'>Editar</a> |
-                            <a href='editar_excluir.php?delete={$row['id']}' onclick='return confirm("Tem certeza que deseja excluir este local?")'>Excluir</a>
+                            <a href='editar_excluir.php?delete={$row['id']}' onclick='return confirm('Tem certeza que deseja excluir este local?')'>Excluir</a>
                         </td>";
                     }
                     echo "</tr>";

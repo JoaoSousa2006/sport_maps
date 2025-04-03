@@ -8,8 +8,7 @@ CREATE TABLE tblUsers (
     idUser INT AUTO_INCREMENT PRIMARY KEY,
     NameUser VARCHAR(100) NOT NULL,
     PasswordUser VARCHAR (20) NOT NULL,
-    EmailUser VARCHAR(100) UNIQUE NOT NULL,
-    nivel_acesso INT NOT NULL DEFAULT 0
+    EmailUser VARCHAR(100) UNIQUE NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- Tabela: Sports

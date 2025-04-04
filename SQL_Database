@@ -8,7 +8,8 @@ CREATE TABLE tblUsers (
     idUser INT AUTO_INCREMENT PRIMARY KEY,
     NameUser VARCHAR(100) NOT NULL,
     PasswordUser VARCHAR (20) NOT NULL,
-    EmailUser VARCHAR(100) UNIQUE NOT NULL
+    EmailUser VARCHAR(100) UNIQUE NOT NULL,
+    nivel_acesso INT NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- Tabela: Sports
@@ -54,19 +55,3 @@ CREATE TABLE placesScores (
     FOREIGN KEY (idUser) REFERENCES tblUsers(idUser),
     FOREIGN KEY (idPlace) REFERENCES tblPlaces(idPlace)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- Inserção de dados na tabela tblUsers
-INSERT INTO tblUsers (NameUser, EmailUser)
-VALUES
-('João Silva', 'joao@gmail.com'),
-('Ana Santos', 'ana@gmail.com'),
-('Carlos Oliveira', 'carlos@gmail.com'),
-('Mariana Costa', 'mariana@gmail.com'),
-('Fernanda Lima', 'fernanda@gmail.com'),
-('Pedro Mendes', 'pedro@gmail.com'),
-('Giulia Grossi', 'Giulia@gmail.com'),
-('Lucas Ramos', 'lucas@gmail.com'),
-('Beatriz Souza', 'beatriz@gmail.com'),
-('Rafael Andrade', 'rafael@gmail.com');
-
-SELECT * FROM tblusers;

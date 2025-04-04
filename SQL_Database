@@ -23,7 +23,7 @@ DROP TABLE IF EXISTS tblPlaces;
 CREATE TABLE tblPlaces (
     idPlace INT AUTO_INCREMENT PRIMARY KEY,
     NamePlace VARCHAR(100) NOT NULL,
-    AdressPlace VARCHAR(1000) NOT NULL UNIQUE,
+    AdressPlace BLOB(1000) NOT NULL UNIQUE,
     EmailPlace VARCHAR(500) NULL,
     PhonePlace VARCHAR(20) NULL,
     LatPlace VARCHAR(3),

@@ -44,6 +44,10 @@
 </head>
 
 <body>
+	<div class="w3-container w3-padding w3-light-grey w3-right-align">
+        	<span>Bem-vindo, <?php echo $_SESSION["user_email"]; ?>!</span>
+        	<a href="logout.php" class="w3-button w3-red">Sair</a>
+    	</div>
 	<form name= "cadastro" method = "post" action="gravar.php">
 		<b><u> <h1> Cadastro de Locais </u></b></h1>
 	<p>

@@ -1,22 +1,25 @@
-
+DROP DATABASE IF EXISTS sport_maps;
 CREATE DATABASE sport_maps;
 USE sport_maps;
 
--- Tabela: Users
+DROP TABLE IF EXISTS tblUsers;
 CREATE TABLE tblUsers (
     idUser INT AUTO_INCREMENT PRIMARY KEY,
     NameUser VARCHAR(100) NOT NULL,
-    PasswordUser VARCHAR (20) NOT NULL,
-    EmailUser VARCHAR(100) UNIQUE NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+    PasswordUser VARCHAR(20) NOT NULL,
+    EmailUser VARCHAR(191) UNIQUE NOT NULL,
+    nivel_acesso INT NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Tabela: Sports
+DROP TABLE IF EXISTS tblSports;
 CREATE TABLE tblSports (
     idSport INT AUTO_INCREMENT PRIMARY KEY,
     SportType ENUM('biking', 'skating', 'roller skating', 'running', 'court', 'sports') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- Tabela: Places
+DROP TABLE IF EXISTS tblPlaces;
 CREATE TABLE tblPlaces (
     idPlace INT AUTO_INCREMENT PRIMARY KEY,
     NamePlace VARCHAR(100) NOT NULL,
@@ -30,6 +33,7 @@ CREATE TABLE tblPlaces (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- Tabela: Feedbacks
+DROP TABLE IF EXISTS tblFeedbacks;
 CREATE TABLE tblFeedbacks (
     idFeedback INT AUTO_INCREMENT PRIMARY KEY,
     idUser INT NOT NULL,
@@ -40,6 +44,7 @@ CREATE TABLE tblFeedbacks (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- Tabela: placesScores
+DROP TABLE IF EXISTS placesScores;
 CREATE TABLE placesScores (
     idScore INT AUTO_INCREMENT PRIMARY KEY,
     idUser INT NOT NULL,
@@ -49,19 +54,3 @@ CREATE TABLE placesScores (
     FOREIGN KEY (idUser) REFERENCES tblUsers(idUser),
     FOREIGN KEY (idPlace) REFERENCES tblPlaces(idPlace)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- Inserção de dados na tabela tblUsers
-INSERT INTO tblUsers (NameUser, EmailUser)
-VALUES
-('João Silva', 'joao@gmail.com'),
-('Ana Santos', 'ana@gmail.com'),
-('Carlos Oliveira', 'carlos@gmail.com'),
-('Mariana Costa', 'mariana@gmail.com'),
-('Fernanda Lima', 'fernanda@gmail.com'),
-('Pedro Mendes', 'pedro@gmail.com'),
-('Giulia Grossi', 'Giulia@gmail.com'),
-('Lucas Ramos', 'lucas@gmail.com'),
-('Beatriz Souza', 'beatriz@gmail.com'),
-('Rafael Andrade', 'rafael@gmail.com');
-
-SELECT * FROM tblusers;

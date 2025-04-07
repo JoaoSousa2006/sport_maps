@@ -23,7 +23,7 @@ DROP TABLE IF EXISTS tblPlaces;
 CREATE TABLE tblPlaces (
     idPlace INT AUTO_INCREMENT PRIMARY KEY,
     NamePlace VARCHAR(100) NOT NULL,
-    AdressPlace BLOB(1000) NOT NULL UNIQUE,
+    AdressPlace text(1000) NOT NULL UNIQUE,
     EmailPlace VARCHAR(500) NULL,
     PhonePlace VARCHAR(20) NULL,
     LatPlace VARCHAR(3),
@@ -38,7 +38,7 @@ CREATE TABLE tblFeedbacks (
     idFeedback INT AUTO_INCREMENT PRIMARY KEY,
     idUser INT NOT NULL,
     idPlace INT NOT NULL,
-    ContentFeedback BLOB(10000) NOT NULL,
+    ContentFeedback text(10000) NOT NULL,
     FOREIGN KEY (idUser) REFERENCES tblUsers(idUser),
     FOREIGN KEY (idPlace) REFERENCES tblPlaces(idPlace)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

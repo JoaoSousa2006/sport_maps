@@ -1,14 +1,19 @@
 <?php
-$servidor = "127.0.0.1"; 
+// $servidor = "127.0.0.1"; 
+// $usuario = "root"; 
+// $senha = "usbw";
+// $banco = "sport_maps";
+
+$servidor = "localhost"; 
 $usuario = "root"; 
-$senha = "usbw";
+$senha = "";
 $banco = "sport_maps";
 
 // Conectar ao banco de dados
-$conn = mysqli_connect($servidor, $usuario, $senha, $banco);
+$connection = mysqli_connect($servidor, $usuario, $senha, $banco);
 
 // Verificar a conexão
-if (!$conn) {
+if (!$connection) {
     die("Deu não :T " . mysqli_connect_error());
 }
 // Se conectar com sucesso

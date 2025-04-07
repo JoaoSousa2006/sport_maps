@@ -1,94 +1,87 @@
 <!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <title>Cadastrar local</title>
-	<style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            background-color: #71f58f;
-        }
-	label {
-		color:#71cbf5;
-	}
-        .container {
-            width: 80%;
-            margin: auto;
-            padding: 20px;
-            background: white;
-            box-shadow: 0px 0px 10px gray;
-            border-radius: 8px;
-            text-align: left;
-        }
-        input, select {
-            padding: 10px;
-            margin: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-        button {
-            padding: 10px 20px;
-            background: #71cbf5;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        a {
-            color: #fff;
-        }
-    </style>
-</head>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style_index.css" />
+    <title>Web Design Mastery | SoulTravel</title>
+  </head>
+  <body>
+    <nav>
+      <div class="nav__header">
+        <div class="nav__logo">
+          <a href="">Sport<span>Maps</span>.</a>
+        </div>
+        <div class="nav__menu__btn" id="menu-btn">
+          <span><i class="ri-menu-line"></i></span>
+        </div>
+      </div>
+      <ul class="nav__links" id="nav-links">
+          <li><a href="cad_local.html">Adicionar Local</a></li>
+        <li><a href="locais.php">Destinos</a></li>
+      </ul>
+      <div class="nav__btns">
+        <!-- <a href="" class="btn sign__up">Sign Up</a> -->
+        <!-- <a  href="login_signin.php" class="btn sign__in">Logar e cadastrar-se</a> -->
+        <a href="cadUser.html" class="btn sign__up">Cadastro</a>
+        <a href="logIn.html" class="btn sign__in">Login</a>
 
-<body>
-	<div class="w3-container w3-padding w3-right-align">
-        	<span>Bem-vindo, <?php echo $_SESSION["user_email"]; ?>!</span>
-        	<a href="logout.php" class="w3-button w3-red">Sair</a>
-    	</div>
-	<form name= "cadastro" method = "post" action="gravar.php">
-		<b><u> <h1> Cadastro de Locais </u></b></h1>
-	<p>
-		<div class="container">
-			<fieldset>
-				<legend>DADOS DO LOCAL</legend>
-					<label> NOME:</label>  
-					<input name="txt_nome" type="text" value="" size="50">
-					
-					<label> ENDEREÇO:</label> 
-					<input name="txt_endereco" type="text" value="" required="yes" maxlength="110"  size="110"><br>
-					
-					<label> ESPAÇO:</label>
-					<select name="txt_espaco">
-						<option value="ArLivre"> Ao ar livre </option>
-						<option value="Coberto"> Área coberta </option>
-						<option value="Misto"> Mista </option>
-					</select>
+      </div>
+    </nav>
+    <header class="header__container">
+      <div class="header__image">
+        <div class="header__image__card header__image__card-1">
+          <span><i class="ri-key-line"></i></span>
+          Hotel Booking
+        </div>
+        <div class="header__image__card header__image__card-2">
+          <span><i class="ri-passport-line"></i></span>
+          Flight Tickets
+        </div>
+        <div class="header__image__card header__image__card-3">
+          <span><i class="ri-map-2-line"></i></span>
+          Local Events
+        </div>
+        <div class="header__image__card header__image__card-4">
+          <span><i class="ri-guide-line"></i></span>
+          Tour Guide
+        </div>
 
-                    <label> FAIXA DE PREÇO:</label>  
-					<select name="txt_preco">
-						<option value="Gratis"> Entrada Gratuita </option>
-						<option value=""> </option>
-						<option value=""> </option>
-					</select><br>
-
-                    <label> ATIVIDADES RECOMENDADAS:</label><br>
-                    <form name="txt_atividades">
-                        <input type = "checkbox" id="ciclismo" value="ciclismo"><label>Ciclismo</label><br>
-                        <input type = "checkbox" id="skate" value="skate"><label>Skateboard</label><br>
-                        <input type = "checkbox" id="patinacao" value="patinacao"><label>Patinação</label><br>
-                        <input type = "checkbox" id="corrida" value="corrida"><label>Corrida</label><br>
-                        <input type = "checkbox" id="quadra" value="quadra"><label>Esportes de quadra</label><br>
-                    </form>
-
-
-			</fieldset><p>
-		</div>
-        <br>
-        <button type="submit" value="Cadastrar" onclick="document.forml.action = 'gravar.php'">Cadastrar</button><br><br> &nbsp; &nbsp; &nbsp; &nbsp;
-		<a href="locais.php"> VIZUALIZAR</a> <br>
-	    
-</body>
+      </div>
+      <div class="header__content">
+        <h1>LET'S GO!<br />THE <span>ADVENTURE</span> IS WAITING FOR YOU</h1>
+        <p style="max-width: 80%;">
+          Embark on Your Journey Today and Discover Uncharted Wonders Around the
+          World - Your Adventure Awaits with Exciting Experiences, Unforgettable
+          Memories, and Endless Opportunities
+        </p>
+        <!-- <form action="/">
+          <div class="input__row">
+            <div class="input__group">
+              <h5>Destination</h5>
+              <div>
+                <span><i class="ri-map-pin-line"></i></span>
+                <input type="text" placeholder="Paris, France" />
+              </div>
+            </div>
+            <div class="input__group">
+              <h5>Date</h5>
+              <div>
+                <span><i class="ri-calendar-2-line"></i></span>
+                <input type="text" placeholder="17 July 2024" />
+              </div>
+            </div>
+          </div>
+          <button type="submit">Search</button>
+        </form> -->
+    </div>
+    <div class="bar">
+      Copyright © 2024 Web Design Mastery. All rights reserved.
+    </div>
+    </header>
+      </body>
 </html>

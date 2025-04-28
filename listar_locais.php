@@ -1,6 +1,6 @@
 <?php
 // Conexão com o banco
-include (conexao.php);
+include_once('conexao.php');
 // Consulta para buscar os locais
 $sql = "SELECT NamePlace, AdressPlace, EmailPlace, PhonePlace, PricePlace FROM tblPlaces";
 $result = $conn->query($sql);

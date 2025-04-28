@@ -1,17 +1,6 @@
 <?php
 // Conexão com o banco
-$host = 'localhost';
-$user = 'root'; // ajuste se necessário
-$pass = '';     // ajuste se necessário
-$dbname = 'sport_maps';
-
-$conn = new mysqli($host, $user, $pass, $dbname);
-
-// Verifica a conexão
-if ($conn->connect_error) {
-    die("Falha na conexão: " . $conn->connect_error);
-}
-
+include (conexao.php);
 // Consulta para buscar os locais
 $sql = "SELECT NamePlace, AdressPlace, EmailPlace, PhonePlace, PricePlace FROM tblPlaces";
 $result = $conn->query($sql);

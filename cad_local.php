@@ -6,10 +6,6 @@ $emailPlace = isset($_POST['emailPlace']) ? $_POST['emailPlace'] : '';
 $phonePlace = isset($_POST['phonePlace']) ? $_POST['phonePlace'] : '';
 $priceRange = isset($_POST['priceRange']) ? $_POST['priceRange'] : '';
 
-print_r("<BR>" . $email);
-print_r("<BR>" . $username);
-print_r("<BR>" . $password);
-
 $result = mysqli_query($connection, "SELECT * FROM tblplaces WHERE adressPlace LIKE '$adressPlace'");
 
 print_r("<BR>");

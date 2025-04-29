@@ -35,6 +35,10 @@
             <form action="log_in.php" method="POST">
               <input type="text" placeholder="Nome de Usuário" name="username" required />
               <input type="password" placeholder="Senha" name="password" required />
+              <div style="margin: 10px 0;">
+                <input type="checkbox" id="adm" name="adm" value="1" />
+                <label for="adm">Sou um administrador</label>
+              </div>
               <button class="submit__btn" type="submit">Login Now</button>
             </form>
           </div>

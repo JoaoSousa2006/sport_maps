@@ -35,18 +35,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>Praça Central</td>
-              <td>Rua das Palmeiras, 123</td>
-              <td>contato@pracacentral.com</td>
-              <td>(11) 99999-0000</td>
-              <td>Gratuito</td>
-              <td class="actions">
-                <button class="btn edit"><i class="ri-edit-box-line"></i></button>
-                <button class="btn delete"><i class="ri-delete-bin-6-line"></i></button>
-              </td>
-            </tr>
-            <!-- outras linhas geradas dinamicamente -->
+             <?php include 'listar_locais.php'; ?>
           </tbody>
         </table>
       </main>

@@ -1,0 +1,56 @@
+DROP DATABASE IF EXISTS sport_maps;
+CREATE DATABASE sport_maps;
+USE sport_maps;
+
+DROP TABLE IF EXISTS tblUsers;
+CREATE TABLE tblUsers (
+    idUser INT AUTO_INCREMENT PRIMARY KEY,
+    NameUser VARCHAR(100) NOT NULL,
+    PasswordUser VARCHAR(20) NOT NULL,
+    EmailUser VARCHAR(191) UNIQUE NOT NULL,
+    nivel_acesso INT NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Tabela: Sports
+DROP TABLE IF EXISTS tblSports;
+CREATE TABLE tblSports (
+    idSport INT AUTO_INCREMENT PRIMARY KEY,
+    SportType ENUM('biking', 'skating', 'roller skating', 'running', 'court', 'sports') NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Tabela: Places
+DROP TABLE IF EXISTS tblPlaces;
+CREATE TABLE tblPlaces (
+    idPlace INT AUTO_INCREMENT PRIMARY KEY,
+    NamePlace VARCHAR(100) NOT NULL,
+    AdressPlace text(1000) NOT NULL UNIQUE,
+    EmailPlace VARCHAR(500) NULL,
+    PhonePlace VARCHAR(20) NULL,
+    LatPlace VARCHAR(3),
+    LongPlace VARCHAR(3),
+    PricePlace FLOAT(5),
+    SportType ENUM('biking', 'skating', 'roller skating', 'running', 'court', 'sports') NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Tabela: Feedbacks
+DROP TABLE IF EXISTS tblFeedbacks;
+CREATE TABLE tblFeedbacks (
+    idFeedback INT AUTO_INCREMENT PRIMARY KEY,
+    idUser INT NOT NULL,
+    idPlace INT NOT NULL,
+    ContentFeedback text(10000) NOT NULL,
+    FOREIGN KEY (idUser) REFERENCES tblUsers(idUser),
+    FOREIGN KEY (idPlace) REFERENCES tblPlaces(idPlace)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Tabela: placesScores
+DROP TABLE IF EXISTS placesScores;
+CREATE TABLE placesScores (
+    idScore INT AUTO_INCREMENT PRIMARY KEY,
+    idUser INT NOT NULL,
+    idPlace INT NOT NULL,
+    SportType ENUM('biking', 'skating', 'roller skating', 'running', 'court', 'sports') NOT NULL,
+    votes INT DEFAULT 0,
+    FOREIGN KEY (idUser) REFERENCES tblUsers(idUser),
+    FOREIGN KEY (idPlace) REFERENCES tblPlaces(idPlace)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

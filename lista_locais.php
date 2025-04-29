@@ -39,7 +39,7 @@ $isAdmin = isset($_SESSION['nivel_acesso']) && $_SESSION['nivel_acesso'] == 1;
         <main class="content">
             <form method="GET">
                 <input type="search" name="search" placeholder="Buscar locais..." value="<?= htmlspecialchars($search) ?>">
-                <button type="submit">Buscar</button>
+                <button class="submit_btn" type="submit">Buscar</button>
             </form>
 
             <table class="places-table">

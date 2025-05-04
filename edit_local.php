@@ -30,6 +30,8 @@ if (!empty($_GET['idPlace'])) {
       
       $PricePlace = $place_data['PricePlace'];
       // echo "PricePlace: $PricePlace<br>";
+
+      $sportType = $place_data['SportType']
     }
     print_r($idPlace);
   } else {
@@ -77,6 +79,14 @@ if (!empty($_GET['idPlace'])) {
             <option value="de R$15 a R$30">Entre R$15,00 e R$30,00</option>
             <option value="de R$30 a R$50">Entre R$30,00 e R$50,00</option>
             <option value="+R$50">Mais de R$50,00</option>
+          </select>
+          <select name="sportType" required>
+            <option hidden>Esporte</option>
+            <option value="Skate">Skate</option>
+            <option value="Bicicleta">Bicicleta</option>
+            <option value="Corrida">Corrida</option>
+            <option value="Patins">Patins</option>
+            <option value="Quadra">Quadra</option>
           </select>
           <button class="submit__btn" type="submit">Salvar alterações</button>
         </form>

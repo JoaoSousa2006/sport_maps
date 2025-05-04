@@ -15,6 +15,9 @@ echo "phonePlace: $phonePlace<br>";
 $priceRange = $_POST['priceRange'];
 echo "priceRange: $priceRange<br>";
 
+$sportType = $_POST['sportType'];
+echo "sportType: $sportType<br>";
+
 $result = mysqli_query($connection, "SELECT * FROM tblplaces WHERE adressPlace LIKE '$adressPlace'");
 
 print_r("<BR>");
@@ -28,7 +31,7 @@ if (mysqli_num_rows($result) > 0) {
     // print_r($result);
     // echo "<center><br>USUÁRIO CADASTRADO!!!<br></center>";
     $result = mysqli_query($connection, query: "INSERT INTO `tblplaces` (`NamePlace`, `AdressPlace`, `EmailPlace`, `PhonePlace`, `PricePlace`, `SportType`) 
-    VALUES ('$namePlace', '$adressPlace', '$emailPlace', '$phonePlace', '$priceRange','#')");
+    VALUES ('$namePlace', '$adressPlace', '$emailPlace', '$phonePlace', '$priceRange','$sportType')");
     print_r($result);
     header('Location: lista_locais.php');
     exit; // Interrompe a execução do restante do script

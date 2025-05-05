@@ -15,7 +15,7 @@ CREATE TABLE tblUsers (
 DROP TABLE IF EXISTS tblSports;
 CREATE TABLE tblSports (
     idSport INT AUTO_INCREMENT PRIMARY KEY,
-    SportType ENUM('biking', 'skating', 'roller skating', 'running', 'court', 'sports') NOT NULL
+    SportType ENUM('Bicicleta', 'Skate', 'Patins', 'Corrida', 'Quadra', 'sports') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- Tabela: Places
@@ -29,7 +29,7 @@ CREATE TABLE tblPlaces (
     LatPlace VARCHAR(3),
     LongPlace VARCHAR(3),
     PricePlace VARCHAR(20),
-    SportType ENUM('biking', 'skating', 'roller skating', 'running', 'court', 'sports') NOT NULL
+    SportType ENUM('Bicicleta', 'Skate', 'Patins', 'Corrida', 'Quadra', 'sports') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- Tabela: Feedbacks
@@ -49,7 +49,7 @@ CREATE TABLE placesScores (
     idScore INT AUTO_INCREMENT PRIMARY KEY,
     idUser INT NOT NULL,
     idPlace INT NOT NULL,
-    SportType ENUM('biking', 'skating', 'roller skating', 'running', 'court', 'sports') NOT NULL,
+    SportType ENUM('Bicicleta', 'Skate', 'Patins', 'Corrida', 'Quadra', 'sports') NOT NULL,
     votes INT DEFAULT 0,
     FOREIGN KEY (idUser) REFERENCES tblUsers(idUser),
     FOREIGN KEY (idPlace) REFERENCES tblPlaces(idPlace)

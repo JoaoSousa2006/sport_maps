@@ -49,7 +49,7 @@ CREATE TABLE placesScores (
     idScore INT AUTO_INCREMENT PRIMARY KEY,
     idUser INT NOT NULL,
     idPlace INT NOT NULL,
-    SportType ENUM('Bicicleta', 'Skate', 'Patins', 'Corrida', 'Quadra', 'sports') NOT NULL
+    SportType ENUM('Bicicleta', 'Skate', 'Patins', 'Corrida', 'Quadra', 'sports') NOT NULL,
     votes INT DEFAULT 0,
     FOREIGN KEY (idUser) REFERENCES tblUsers(idUser),
     FOREIGN KEY (idPlace) REFERENCES tblPlaces(idPlace)

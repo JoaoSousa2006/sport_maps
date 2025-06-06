@@ -15,7 +15,7 @@ if (!isset($_SESSION['username']) || !isset($_SESSION['password'])) {
 
 // O PHP agora SEMPRE busca todos os locais
 // Certifique-se de selecionar LatPlace e LongPlace explicitamente
-$sql = "SELECT idPlace, NamePlace, AdressPlace, EmailPlace, PhonePlace, PricePlace, SportType, LatPlace, LongPlace FROM tblplaces;";
+$sql = "SELECT idPlace, NamePlace, AdressPlace, PricePlace, SportType, LatPlace, LongPlace FROM tblplaces;";
 
 // Consulta SQL com filtros aplicados
 $result = $connection->query($sql);
@@ -90,14 +90,19 @@ if ($result->num_rows > 0) {
         .actions {
             white-space: nowrap;
         }
-        .btn.edit, .btn.delete {
+        .btn.edit, .btn.delete, .btn.view-map { /* Adicionado estilo para o novo botão */
             padding: 5px 10px;
             margin-right: 5px;
             border: none;
             border-radius: 4px;
             cursor: pointer;
             color: white;
+            font-size: 1em; /* Ajuste o tamanho da fonte */
         }
+        .btn.edit { background-color: #007bff; }
+        .btn.delete { background-color: #dc3545; }
+        .btn.view-map { background-color: #28a745; } /* Cor para o novo botão */
+
 
         /* Estilo para o container do mapa */
         #mapid {
@@ -108,7 +113,35 @@ if ($result->num_rows > 0) {
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
 
-        /* Removido o address-search-section pois haverá apenas um campo de busca */
+        /* --- NOVOS ESTILOS PARA ROLAGEM DA TABELA (INÍCIO) --- */
+        .table-scroll-container {
+            max-height: 400px; /* Defina a altura máxima desejada para a área de rolagem */
+            overflow-y: auto; /* Habilita a rolagem vertical quando o conteúdo excede a altura máxima */
+            overflow-x: visible; /* Evita rolagem horizontal */
+            border: 1px solid #ddd; /* Opcional: Adiciona uma borda para delimitar a área de rolagem */
+            margin-bottom: 20px; /* Espaço entre a tabela e o mapa, se houver */
+        }
+
+        .places-table { /* Usa a classe da sua tabela existente */
+            width: 100%; /* Faz a tabela ocupar 100% da largura do contêiner de rolagem */
+            border-collapse: collapse; /* Para que as bordas da tabela e células se combinem */
+            margin-bottom: 0; /* Remove margem inferior que possa causar barra de rolagem desnecessária */
+        }
+
+        .places-table th, .places-table td {
+            padding: 10px; /* Ajustado para um padding padrão, mas use o que você já tem em 'style_lista.css' se for diferente */
+            border: 1px solid #ddd; /* Bordas das células */
+            text-align: left;
+            white-space: nowrap; /* Evita que o texto quebre linhas, mantendo as colunas compactas */
+        }
+
+        .places-table thead {
+            position: sticky; /* Fixa o cabeçalho ao rolar */
+            top: 0; /* Fixa no topo do contêiner de rolagem */
+            background-color: #f8f9fa; /* Cor de fundo do cabeçalho fixo (pode ajustar) */
+            z-index: 10; /* Garante que o cabeçalho fique acima do conteúdo ao rolar */
+        }
+        /* --- NOVOS ESTILOS PARA ROLAGEM DA TABELA (FIM) --- */
     </style>
 </head>
 
@@ -126,24 +159,23 @@ if ($result->num_rows > 0) {
 
         <main class="content">
             <input id="search" type="search" placeholder="Buscar locais ou endereço..." onkeydown="handleSearch(event)"/>
-            <table class="places-table">
-                <thead>
-                    <tr>
-                        <th scope="col">Nome</th>
-                        <th scope="col">Endereço</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Telefone</th>
-                        <th scope="col">Preço</th>
-                        <th scope="col">Esporte</th>
-                        <?php if ($nivel_acesso == 1)
-                            echo "<th>Ações</th>"; ?>
-                    </tr>
-                </thead>
-                <tbody id="placesTableBody">
-                    </tbody>
-            </table>
-
-            <div id="mapid"></div>
+            
+            <div class="table-scroll-container">
+                <table class="places-table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Nome</th>
+                            <th scope="col">Endereço</th>
+                            <th scope="col">Preço</th>
+                            <th scope="col">Atividade Principal</th>
+                            <?php if ($nivel_acesso == 1)
+                                echo "<th>Ações</th>"; ?>
+                        </tr>
+                    </thead>
+                    <tbody id="placesTableBody">
+                        </tbody>
+                </table>
+            </div> <div id="mapid"></div>
         </main>
     </div>
 
@@ -153,11 +185,12 @@ if ($result->num_rows > 0) {
         const allPlacesData = <?php echo json_encode($all_places_data); ?>;
         const nivelAcesso = <?php echo json_encode($nivel_acesso); ?>; // Passa o nível de acesso para JS
 
-        let currentMarkers = L.featureGroup(); // Grupo para gerenciar os marcadores do mapa
+        let currentMarkers = L.featureGroup(); // Grupo para gerenciar os marcadores dos locais
+        let searchResultMarker = null; // Marcador para o resultado da busca de endereço
 
         // --- Configuração e Inicialização do Mapa Leaflet ---
         let mapCenter = [-23.6698, -46.4617]; // Padrão: Mauá, SP
-        let mapZoom = 10; // Zoom padrão
+        let mapZoom = 12; // Zoom padrão (um pouco mais amplo)
 
         const mymap = L.map('mapid').setView(mapCenter, mapZoom);
 
@@ -178,7 +211,9 @@ if ($result->num_rows > 0) {
             tableBody.innerHTML = ''; // Limpa o corpo da tabela
 
             if (dataToDisplay.length === 0) {
-                tableBody.innerHTML = '<tr><td colspan="7" style="text-align: center;">Nenhum local encontrado.</td></tr>';
+                // Colspan ajustado para o número total de colunas visíveis
+                const totalColumns = nivelAcesso == 1 ? 8 : 7; // 7 colunas fixas + 1 de Ações se for admin
+                tableBody.innerHTML = `<tr><td colspan="${totalColumns}" style="text-align: center;">Nenhum local encontrado.</td></tr>`;
                 return;
             }
 
@@ -186,19 +221,26 @@ if ($result->num_rows > 0) {
                 const row = tableBody.insertRow();
                 row.insertCell().textContent = place.NamePlace;
                 row.insertCell().textContent = place.AdressPlace;
-                row.insertCell().textContent = place.EmailPlace;
-                row.insertCell().textContent = place.PhonePlace;
                 row.insertCell().textContent = place.PricePlace;
                 row.insertCell().textContent = place.SportType;
 
-                if (nivelAcesso == 1) { // Verifica o nível de acesso para exibir as ações
-                    const actionsCell = row.insertCell();
+                // Célula para as ações de CRUD (se aplicável)
+                let actionsCell;
+                if (nivelAcesso == 1) {
+                    actionsCell = row.insertCell();
                     actionsCell.className = 'actions';
-                    actionsCell.innerHTML = 
+                    actionsCell.innerHTML = `
                         <a href='edit_local.php?idPlace=${place.idPlace}'><button class='btn edit'><i class='ri-edit-box-line'></i></button></a>
                         <a href='delete.php?idPlace=${place.idPlace}'><button class='btn delete'><i class='ri-delete-bin-6-line'></i></button></a>
-                    ;
+                        <button class='btn view-map' onclick='zoomToPlace(${parseFloat(place.LatPlace)}, ${parseFloat(place.LongPlace)})'>
+                            <i class='ri-map-pin-line'></i>
+                        </button>
+                    `;
                 }
+
+                // Célula para o botão "Ver no Mapa"
+                const viewMapCell = row.insertCell();
+
             });
         }
 
@@ -216,7 +258,7 @@ if ($result->num_rows > 0) {
                     const lat = parseFloat(place.LatPlace);
                     const lon = parseFloat(place.LongPlace);
                     const marker = L.marker([lat, lon]);
-                    marker.bindPopup(<b>${place.NamePlace}</b><br>${place.AdressPlace}<br>Esporte: ${place.SportType});
+                    marker.bindPopup(`<b>${place.NamePlace}</b><br>${place.AdressPlace}<br>Esporte: ${place.SportType}`);
                     currentMarkers.addLayer(marker); // Adiciona o marcador ao grupo
                     bounds.extend([lat, lon]); // Estende o limite para incluir o marcador
                 }
@@ -239,6 +281,12 @@ if ($result->num_rows > 0) {
             if (event.key === 'Enter') {
                 const searchTerm = document.getElementById('search').value.toLowerCase().trim();
 
+                // Remove o marcador de busca anterior, se houver
+                if (searchResultMarker) {
+                    mymap.removeLayer(searchResultMarker);
+                    searchResultMarker = null;
+                }
+
                 let filteredPlaces = [];
                 let geocodedLocation = null;
 
@@ -250,15 +298,14 @@ if ($result->num_rows > 0) {
                     filteredPlaces = allPlacesData.filter(place =>
                         (place.NamePlace && place.NamePlace.toLowerCase().includes(searchTerm)) ||
                         (place.AdressPlace && place.AdressPlace.toLowerCase().includes(searchTerm)) ||
-                        (place.EmailPlace && place.EmailPlace.toLowerCase().includes(searchTerm)) ||
-                        (place.PhonePlace && place.PhonePlace.toLowerCase().includes(searchTerm)) ||
                         (place.SportType && place.SportType.toLowerCase().includes(searchTerm))
                     );
 
                     // Se não encontrou nenhum local pelos critérios acima, tenta geocodificar o termo como endereço
                     if (filteredPlaces.length === 0) {
                         try {
-                            const nominatimUrl = https://nominatim.openstreetmap.org/search?format=json&limit=1&q=${encodeURIComponent(searchTerm)};
+                            // Adiciona um contexto à busca para melhorar a precisão, por exemplo, a cidade/estado
+                            const nominatimUrl = `https://nominatim.openstreetmap.org/search?format=json&limit=1&q=${encodeURIComponent(searchTerm + ", Mauá, SP, Brasil")}`;
                             const response = await fetch(nominatimUrl);
                             const data = await response.json();
 
@@ -268,9 +315,8 @@ if ($result->num_rows > 0) {
                                     lon: parseFloat(data[0].lon),
                                     display_name: data[0].display_name
                                 };
-                                // Não filtra a tabela por geocodificação, apenas centraliza o mapa e adiciona um marcador
-                                // A tabela permanece vazia ou exibe a última filtragem de texto.
-                                // Se você quiser que a tabela também mostre "próximos" ao endereço, seria mais complexo (ex: busca por proximidade no banco de dados)
+                            } else {
+                                // console.log("Endereço não encontrado pelo serviço de geocodificação para: " + searchTerm);
                             }
                         } catch (error) {
                             console.error("Erro na geocodificação:", error);
@@ -281,16 +327,38 @@ if ($result->num_rows > 0) {
                 // Atualiza a tabela
                 populateTable(filteredPlaces);
 
-                // Atualiza o mapa
-                updateMapMarkers(filteredPlaces); // Marca os locais filtrados da tabela
-                // Se houver uma localização geocodificada (mesmo que não tenha filtrado a tabela), adiciona um marcador e centraliza o mapa
+                // Atualiza os marcadores dos locais no mapa
+                updateMapMarkers(filteredPlaces);
+
+                // Se houver uma localização geocodificada (de uma busca por endereço que não é um local cadastrado)
                 if (geocodedLocation) {
-                    const searchMarker = L.marker([geocodedLocation.lat, geocodedLocation.lon]).addTo(mymap);
-                    searchMarker.bindPopup(<b>${geocodedLocation.display_name}</b><br>Resultado da Busca).openPopup();
-                    mymap.setView([geocodedLocation.lat, geocodedLocation.lon], 15); // Aumenta o zoom para o local buscado
-                    mymapsetZoom(10); // Aumenta o zoom para o local buscado
+                    searchResultMarker = L.marker([geocodedLocation.lat, geocodedLocation.lon], {
+                        icon: L.markerClusterGroup ? L.AwesomeMarkers.icon({ icon: 'home', markerColor: 'blue' }) : L.icon({ iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-blue.png' })
+                    }).addTo(mymap);
+                    searchResultMarker.bindPopup(`<b>${geocodedLocation.display_name}</b><br>Resultado da Busca`).openPopup();
+                    mymap.setView([geocodedLocation.lat, geocodedLocation.lon], 15); // Centraliza e dá zoom na busca
+                } else if (filteredPlaces.length === 0 && searchTerm !== '') {
+                    // Se não encontrou locais e não geocodificou, centraliza no padrão ou informa
+                    mymap.setView(mapCenter, mapZoom);
+                    // alert("Nenhum local ou endereço encontrado para '" + searchTerm + "'.");
                 }
             }
+        }
+
+        /**
+         * Centraliza o mapa em uma localização específica e abre o popup do marcador.
+         * @param {number} lat - Latitude.
+         * @param {number} lon - Longitude.
+         */
+        function zoomToPlace(lat, lon) {
+            mymap.setView([lat, lon], 17); // Centraliza o mapa com um zoom mais próximo (17 é bom para ruas)
+
+            // Opcional: Tentar abrir o popup do marcador correspondente
+            currentMarkers.eachLayer(function(marker) {
+                if (marker.getLatLng().lat === lat && marker.getLatLng().lng === lon) {
+                    marker.openPopup();
+                }
+            });
         }
 
         // Inicializa a tabela e o mapa com todos os dados quando a página carrega
@@ -299,5 +367,18 @@ if ($result->num_rows > 0) {
             updateMapMarkers(allPlacesData);
         });
     </script>
+    <script>
+        // Esta função searchPlaces foi renomeada para handleSearch e já está incorporada acima.
+        // Se você não a estiver chamando em mais nenhum lugar, esta função pode ser removida.
+        // function searchPlaces(event) {
+        //     if (event.key === 'Enter') {
+        //         const searchInput = document.getElementById('search').value;
+        //         const url = new URL(window.location.href);
+        //         url.searchParams.set('search', searchInput);
+        //         window.location.href = url;
+        //     }
+        // }
+    </script>
+
 </body>
 </html>

@@ -1,0 +1,103 @@
+!<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style_index.css" />
+    <title>Web Design Mastery | SoulTravel</title>
+  </head>
+  <body>
+    <nav>
+      <div class="nav__header">
+        <div class="nav__logo">
+          <a href="">Sport<span>Maps</span>.</a>
+        </div>
+        <div class="nav__menu__btn" id="menu-btn">
+          <span><i class="ri-menu-line"></i></span>
+        </div>
+      </div>
+      <ul class="nav__links" id="nav-links">
+          <li><a href="cad_local.html">Adicionar Local</a></li>
+        <li><a href="lista_locais.php">Buscar Locais</a></li>
+      </ul>
+      <div class="nav__btns">
+        <a href="cadUser.html" class="btn sign__up">Cadastro</a>
+        <a href="logIn.html" class="btn sign__in">Login</a>
+
+      </div>
+    </nav>
+    <header class="header__container">
+            <div class="local__details">
+              <h1>Nome do Local</h1>
+              <p><strong>Endereço:</strong> Rua Exemplo, 123</p>
+              <p><strong>Telefone:</strong> (11) 99999-9999</p>
+              <p><strong>Esporte:</strong> Skate</p>
+              <p><strong>Preço:</strong> Gratuito</p>
+              <p><strong>Descrição:</strong> Um ótimo local para a prática de skate com pistas de qualidade e segurança.</p>
+              <div class="local__images">
+                <h3>Imagens do Local</h3>
+                <div class="image__slider">
+                  <button class="prev" onclick="mudarSlide(-1)">&#10094;</button>
+                  <img id="imagemAtual" src="img/local1.jpg" alt="Imagem do local" />
+                  <button class="next" onclick="mudarSlide(1)">&#10095;</button>
+                </div>
+              </div>              
+            </div>
+    
+            <div class="comments__section">
+              <h2>Comentários</h2>
+              <button class="btn_comentar" onclick='abrirFormulario()'>Comentar</button>
+
+              <div class="comment">
+                <p><strong>Maria:</strong> Lugar incrível, muito bem cuidado!</p>
+              </div>
+              <div class="comment">
+                <p><strong>João:</strong> Poderia ter iluminação à noite.</p>
+              </div>
+              <!-- Mais comentários dinâmicos aqui -->
+            </div>
+          </div>
+        </div>
+      </header>
+      <div id="comentarioModal" class="modal">
+        <div class="modal-content">
+          <span class="fechar" onclick='fecharFormulario()'>&times;</span>
+          <h3>Novo Comentário</h3>
+          <form class="form__content">
+            <input type="text" placeholder="Seu nome" required />
+            <textarea placeholder="Escreva seu comentário" rows="4" required></textarea>
+            <button type="submit" class="btn_comentar">Enviar</button>
+          </form>
+        </div>
+      </div>
+      <script>
+        const imagens = [
+          "img/local1.jpg",
+          "img/local2.jpg",
+          "img/local3.jpg"
+        ];
+        let indiceAtual = 0;
+      
+        function mudarSlide(direcao) {
+          indiceAtual += direcao;
+          if (indiceAtual < 0) indiceAtual = imagens.length - 1;
+          if (indiceAtual >= imagens.length) indiceAtual = 0;
+          document.getElementById("imagemAtual").src = imagens[indiceAtual];
+        }
+      </script>
+      <script>
+        function abrirFormulario() {
+          document.getElementById("comentarioModal").classList.add("ativa");
+        }
+      
+        function fecharFormulario() {
+          document.getElementById("comentarioModal").classList.remove("ativa");
+        }
+      </script>
+    </body>
+</html>

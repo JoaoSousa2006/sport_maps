@@ -1,0 +1,72 @@
+DROP DATABASE IF EXISTS sport_maps;
+CREATE DATABASE sport_maps;
+USE sport_maps;
+
+DROP TABLE IF EXISTS tblUsers;
+CREATE TABLE tblUsers (
+    idUser INT AUTO_INCREMENT PRIMARY KEY,
+    NameUser VARCHAR(100) NOT NULL,
+    PasswordUser VARCHAR(20) NOT NULL,
+    EmailUser VARCHAR(191) UNIQUE NOT NULL,
+    nivel_acesso INT NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Tabela: Sports
+DROP TABLE IF EXISTS tblSports;
+CREATE TABLE tblSports (
+    idSport INT AUTO_INCREMENT PRIMARY KEY,
+    SportType ENUM('Bicicleta', 'Skate', 'Patins', 'Corrida', 'Quadra', 'sports') NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Tabela: Places
+DROP TABLE IF EXISTS tblPlaces;
+CREATE TABLE tblPlaces (
+    idPlace INT AUTO_INCREMENT PRIMARY KEY,
+    NamePlace VARCHAR(100) NOT NULL,
+    AdressPlace VARCHAR(1000) NOT NULL UNIQUE, -- TEXT(1000) é uma sintaxe não padrão, VARCHAR(1000) é mais comum ou TEXT sem tamanho
+    EmailPlace VARCHAR(500) NULL,
+    PhonePlace VARCHAR(20) NULL,
+    LatPlace DECIMAL(10, 7), -- CORRIGIDO: Tipo de dado para latitude
+    LongPlace DECIMAL(10, 7), -- CORRIGIDO: Tipo de dado para longitude
+    PricePlace VARCHAR(20),
+    SportType ENUM('Bicicleta', 'Skate', 'Patins', 'Corrida', 'Quadra', 'sports') NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Tabela: Feedbacks
+DROP TABLE IF EXISTS tblFeedbacks;
+CREATE TABLE tblFeedbacks (
+    idFeedback INT AUTO_INCREMENT PRIMARY KEY,
+    idUser INT NOT NULL,
+    idPlace INT NOT NULL,
+    ContentFeedback text(10000) NOT NULL,
+    FOREIGN KEY (idUser) REFERENCES tblUsers(idUser),
+    FOREIGN KEY (idPlace) REFERENCES tblPlaces(idPlace)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Tabela: placesScores
+DROP TABLE IF EXISTS placesScores;
+CREATE TABLE placesScores (
+    idScore INT AUTO_INCREMENT PRIMARY KEY,
+    idUser INT NOT NULL,
+    idPlace INT NOT NULL,
+    SportType ENUM('Bicicleta', 'Skate', 'Patins', 'Corrida', 'Quadra', 'sports') NOT NULL,
+    votes INT DEFAULT 0,
+    FOREIGN KEY (idUser) REFERENCES tblUsers(idUser),
+    FOREIGN KEY (idPlace) REFERENCES tblPlaces(idPlace)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Inserção de usuários
+INSERT INTO tblUsers (NameUser, PasswordUser, EmailUser, nivel_acesso) VALUES
+('João Sousa', 'senha123', 'joao.sousa@example.com', 0),
+('Maria Oliveira', '123senha', 'maria.oliveira@example.com', 0),
+('Carlos Souza', 'minhasenha', 'carlos.souza@example.com', 0),
+('Ana Martins', 'senha321', 'ana.martins@example.com', 0),
+('@Admin Master', 'admin1234', 'admin@example.com', 1);
+
+-- Inserção de locais reais de prática esportiva
+INSERT INTO tblPlaces (NamePlace, AdressPlace, EmailPlace, PhonePlace, PricePlace, SportType, LatPlace, LongPlace) VALUES
+('Parque Ibirapuera', 'Av. Pedro Álvares Cabral - Vila Mariana, São Paulo - SP', 'contato@ibirapuera.org', '(11) 1234-5678', 'Gratuito', 'Corrida', -23.588333, -46.658890),
+('Praça Roosevelt', 'Praça Franklin Roosevelt - Consolação, São Paulo - SP', 'skate@rooseveltsp.gov', '(11) 8765-4321', 'Gratuito', 'Skate', -23.548117, -46.646180),
+('Parque da Cidade Sarah Kubitschek', 'SGAS 910, Brasília - DF', 'contato@parquedacidade.df.gov.br', '(61) 3342-1234', 'Gratuito', 'Bicicleta', -15.793889, -47.882778),
+('Arena Radialista Mário Helênio', 'R. José de Alencar - São Pedro, Juiz de Fora - MG', NULL, '(32) 3690-8300', 'R$15,00', 'Quadra', -21.737887, -43.344406),
+('Pista de Patinação do Parque Madureira', 'Parque Madureira - Rio de Janeiro - RJ', NULL, '(21) 2589-1234', 'Gratuito', 'Patins', -22.873215, -43.340669);

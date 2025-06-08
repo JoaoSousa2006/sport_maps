@@ -1,0 +1,19 @@
+/* Estilos relacionados ao mapa */
+
+            .map-wrapper {
+        max-width: 40vw; /* Largura máxima em relação à largura da viewport */
+        height: 70vh; /* Altura em relação à altura da viewport */
+        /* padding-right: 0%; / / Isso geralmente não é necessário ou pode ser 0 */
+        overflow: hidden; /* Se o conteúdo exceder, será cortado */
+        border-radius: 10px; /* Bordas arredondadas */
+        flex-shrink: 0; /* Impede que ele encolha mais do que o necessário em flexbox */
+        flex-grow: 1; /* Permite que ele cresça para ocupar espaço disponível */
+        min-width: 300px; /* Largura mínima para o mapa, evita que ele fique muito pequeno */
+        /* margin: 0 auto; / / Se quiser centralizar horizontalmente quando flex-wrap ocorrer */
+      }
+
+      /* Estilo para a div real do mapa dentro do wrapper */
+      #mapid {
+        width: 100%; /* Ocupa 100% da largura do seu pai (.map-wrapper) */
+        height: 100%; /* Ocupa 100% da altura do seu pai (.map-wrapper) */
+      }

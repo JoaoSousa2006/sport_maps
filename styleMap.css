@@ -1,7 +1,7 @@
 /* Estilos relacionados ao mapa */
 
             .map-wrapper {
-        max-width: 40vw; /* Largura máxima em relação à largura da viewport */
+        max-width: 100%; /* Largura máxima em relação à largura da viewport */
         height: 70vh; /* Altura em relação à altura da viewport */
         /* padding-right: 0%; / / Isso geralmente não é necessário ou pode ser 0 */
         overflow: hidden; /* Se o conteúdo exceder, será cortado */
@@ -16,4 +16,10 @@
       #mapid {
         width: 100%; /* Ocupa 100% da largura do seu pai (.map-wrapper) */
         height: 100%; /* Ocupa 100% da altura do seu pai (.map-wrapper) */
+      }
+
+      @media (width > 768px) {
+      }
+
+      @media (width > 1024px) {
       }

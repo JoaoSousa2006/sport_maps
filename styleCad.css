@@ -1,0 +1,233 @@
+/* style_cadastro.css: Estilos para as páginas de cadastro (usuario e local) e login */
+
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap");
+@import url(root.css); /* Importa as variáveis de cores globais */
+
+* {
+  padding: 0; /* Remove o preenchimento padrão de todos os elementos */
+  margin: 0; /* Remove a margem padrão de todos os elementos */
+  box-sizing: border-box; /* Garante que padding e border sejam incluídos na largura/altura do elemento */
+}
+a {
+  text-decoration: none; /* Remove o sublinhado padrão dos links */
+  color: var(--text-light); /* Cor padrão dos links */
+}
+a:hover {
+  color: var(--text-dark); /* Cor dos links ao passar o mouse */
+}
+body {
+  font-family: "Lato", sans-serif; /* Define a fonte principal para o corpo */
+}
+
+.container {
+  display: flex; /* Usa flexbox para layout de duas colunas */
+  min-height: 100vh; /* Altura mínima de 100% da viewport height */
+  min-height: 100svh; /* Altura mínima de 100% da small viewport height (para compatibilidade móvel) */
+}
+
+.container__left {
+  flex: 1; /* Permite que o lado esquerdo ocupe o espaço restante */
+}
+
+.content {
+  max-width: 450px; /* Largura máxima do conteúdo central */
+  padding: 1rem; /* Preenchimento interno */
+  margin: auto; /* Centraliza o conteúdo horizontalmente */
+}
+
+.header {
+  display: flex; /* Usa flexbox para o cabeçalho */
+  align-items: center; /* Alinha itens verticalmente ao centro */
+  justify-content: space-between; /* Distribui o espaço entre os itens */
+  color: var(--text-light); /* Cor do texto do cabeçalho */
+  margin: 1rem 0; /* Margem vertical */
+}
+
+.header .register {
+  font-size: 1rem; /* Tamanho da fonte para o link de cadastro */
+  font-weight: 700; /* Espessura da fonte */
+  cursor: pointer; /* Cursor de ponteiro */
+}
+
+.header .back__btn {
+  font-size: 1.2rem; /* Tamanho da fonte para o botão de voltar */
+  cursor: pointer; /* Cursor de ponteiro */
+}
+
+.form__content {
+  max-width: 350px; /* Largura máxima do conteúdo do formulário */
+  margin: 4rem auto 0; /* Margem superior e centraliza horizontalmente */
+}
+
+
+.form__content .form__title {
+  font-size: 1.5rem; /* Tamanho da fonte para o título do formulário */
+  font-weight: 700; /* Espessura da fonte */
+  margin-bottom: 1rem; /* Margem inferior */
+  color: var(--text-dark); /* Cor do texto */
+}
+
+.form__content .form__subtitle {
+  font-size: 1rem; /* Tamanho da fonte para o subtítulo do formulário */
+  margin-bottom: 2.5rem; /* Margem inferior */
+  color: var(--text-light); /* Cor do texto */
+}
+
+.form__content input, .form__content select { /* Incluído 'select' aqui */
+  display: block; /* Define como bloco */
+  width: 100%; /* Largura total */
+  margin-bottom: 1rem; /* Margem inferior */
+  outline: none; /* Remove contorno ao focar */
+  border: none; /* Remove borda */
+  border-radius: 2px; /* Bordas arredondadas */
+  padding: 0.75rem; /* Preenchimento */
+  font-size: 1rem; /* Tamanho da fonte */
+  background-color: var(--extra-light); /* Cor de fundo */
+}
+
+.login-layout {
+  flex-direction: row-reverse; /* Reverte a ordem dos itens flexíveis (para layout de login) */
+}
+.center-layout {
+  display: flex; /* Usa flexbox */
+  align-items: center; /* Alinha itens verticalmente */
+  justify-content: center; /* Centraliza itens horizontalmente */
+  gap: 1rem; /* Espaçamento entre itens */
+  padding: 2rem; /* Preenchimento interno */
+}
+.banner-side {
+  flex: 1; /* Permite que o banner lateral cresça/encolha */
+  background-size: cover; /* Ajusta a imagem de fundo para cobrir todo o contêiner */
+  background-position: center; /* Centraliza a imagem de fundo */
+  height: 100vh; /* Altura total da viewport */
+}
+.left-banner {
+  background-image: url('./assets/bg3.png'); /* Imagem de fundo para o banner esquerdo */
+}
+.right-banner {
+  background-image: url('./assets/bg4.png'); /* Imagem de fundo para o banner direito */
+}
+
+.form__content .forgot__password {
+  text-align: right; /* Alinha texto à direita */
+  font-weight: 700; /* Espessura da fonte */
+  margin-bottom: 1.5rem; /* Margem inferior */
+  cursor: pointer; /* Cursor de ponteiro */
+  color: var(--text-light); /* Cor do texto */
+}
+
+.form__content .submit__btn {
+  width: 100%; /* Largura total */
+  padding: 1rem; /* Preenchimento */
+  background-color: var(--primary-color); /* Cor de fundo */
+  color: #ffffff; /* Cor do texto */
+  font-size: 1rem; /* Tamanho da fonte */
+  border: none; /* Remove borda */
+  border-radius: 5rem; /* Bordas muito arredondadas */
+  cursor: pointer; /* Cursor de ponteiro */
+  transition: 0.3s; /* Transição suave */
+}
+.form__content .submit__btn:hover {
+  background-color: var(--primary-color-dark); /* Cor de fundo ao passar o mouse */
+}
+
+.form__content .bottom__line {
+  display: block; /* Define como bloco */
+  height: 3px; /* Altura */
+  width: 100%; /* Largura total */
+  background-color: var(--extra-light); /* Cor de fundo */
+  margin: 2rem 0; /* Margem vertical */
+}
+
+.footer__title {
+  text-align: center; /* Alinhamento de texto */
+  font-weight: 700; /* Espessura da fonte */
+  margin-bottom: 1rem; /* Margem inferior */
+  color: var(--text-light); /* Cor do texto */
+}
+
+.social__icons {
+  display: flex; /* Usa flexbox */
+  align-items: center; /* Alinha itens verticalmente */
+  justify-content: center; /* Centraliza itens horizontalmente */
+  gap: 1.5rem; /* Espaçamento entre ícones */
+}
+
+.social__icons i {
+  font-size: 1.5rem; /* Tamanho da fonte para os ícones */
+  color: var(--primary-color); /* Cor dos ícones */
+  cursor: pointer; /* Cursor de ponteiro */
+  transition: 0.3s; /* Transição suave */
+}
+.social__icons i:hover {
+  color: var(--primary-color-dark); /* Cor dos ícones ao passar o mouse */
+}
+
+.container__right {
+  display: flex; /* Usa flexbox */
+  flex: 1.5; /* Ocupa mais espaço que o container__left */
+}
+
+.usuario_image {
+  background: url(./assets/bg.png); /* Imagem de fundo para o login de usuário */
+  background-position: center center; /* Posição da imagem de fundo */
+  background-size: cover; /* Ajusta o tamanho da imagem */
+  background-repeat: no-repeat; /* Não repete a imagem */
+  position: relative; /* Posição relativa para posicionar elementos filhos */
+}
+
+.cadastro_image {
+  background: url(./assets/bg2.png); /* Imagem de fundo para o cadastro de usuário */
+  background-position: center center; /* Posição da imagem de fundo */
+  background-size: cover; /* Ajusta o tamanho da imagem */
+  background-repeat: no-repeat; /* Não repete a imagem */
+  position: relative; /* Posição relativa */
+}
+
+.container__right::before {
+  content: ""; /* Conteúdo vazio para o pseudo-elemento */
+  position: absolute; /* Posição absoluta */
+  height: 75%; /* Altura */
+  width: 100%; /* Largura */
+  left: 0; /* Posição à esquerda */
+  bottom: 0; /* Posição na parte inferior */
+  background: linear-gradient(to top, #000000, #00000000); /* Gradiente de fundo */
+}
+
+.image {
+  position: absolute; /* Posição absoluta */
+  top: 75%; /* Posição no topo */
+  left: 50%; /* Posição à esquerda */
+  transform: translateX(-50%); /* Centraliza horizontalmente */
+  display: grid; /* Usa grid para layout */
+  gap: 1rem; /* Espaçamento entre itens */
+  width: 80%; /* Largura */
+  max-width: 30rem; /* Largura máxima */
+  color: #ffffff; /* Cor do texto */
+}
+
+.image h3 {
+  font-size: 2rem; /* Tamanho da fonte */
+  position: relative; /* Posição relativa */
+}
+
+.image h3::before {
+  content: ""; /* Conteúdo vazio para o pseudo-elemento */
+  position: absolute; /* Posição absoluta */
+  top: 50%; /* Posição vertical */
+  left: -4rem; /* Posição horizontal */
+  height: 2px; /* Altura */
+  width: 3rem; /* Largura */
+  background-color: #ffffff; /* Cor de fundo */
+}
+
+.image p {
+  font-size: 1rem; /* Tamanho da fonte */
+}
+
+/* Media query para telas menores (esconde o lado direito) */
+@media screen and (width < 750px) {
+  .container__right {
+    display: none; /* Esconde o contêiner da direita */
+  }
+}

@@ -1,0 +1,9 @@
+/* root.css: Define as variáveis de cores globais para o projeto */
+:root {
+  --primary-color: #FAE033; /* Cor primária do tema, usada para elementos de destaque */
+  --primary-color-dark: #7851A9; /* Uma variação mais escura da cor primária, para estados de hover/ativo */
+  --text-dark: #1f2937; /* Cor escura para textos principais */
+  --text-light: #6b7280; /* Cor mais clara para textos secundários ou menos importantes */
+  --extra-light: #f3f4f6; /* Cor de fundo muito clara, para seções com contraste suave */
+  --background: #ffffff; /* Cor de fundo principal dos contêineres e cards */
+}

@@ -1,0 +1,154 @@
+/* style_lista.css: Estilos específicos para a página de listagem de locais */
+
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap");
+@import url(root.css); /* Importa as variáveis de cores globais */
+@import url(style_index.css); /* Importa estilos gerais da página inicial */
+
+* {
+  margin: 0; /* Remove a margem padrão */
+  padding: 0; /* Remove o preenchimento padrão */
+  box-sizing: border-box; /* Garante que padding e border sejam incluídos na largura/altura do elemento */
+}
+
+body {
+  font-family: "Lato", sans-serif; /* Define a fonte */
+  background-color: var(--extra-light); /* Cor de fundo do corpo */
+  color: var(--text-dark); /* Cor do texto */
+  min-height: 100vh; /* Altura mínima de 100% da viewport height */
+}
+
+a {
+    text-decoration: none; /* Remove sublinhado */
+    color: var(--text-light); /* Cor do link */
+}
+a:hover {
+    color: var(--text-dark); /* Cor do link ao passar o mouse */
+}
+
+.page-container {
+  /* max-width: auto; - W3.CSS w3-container ja gerencia largura */
+  padding: 2rem; /* Preenchimento */
+  background-color: var(--background); /* Cor de fundo */
+  border-radius: 1rem; /* Bordas arredondadas */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05); /* Sombra */
+}
+
+.header {
+  display: flex; /* Usa flexbox */
+  align-items: center; /* Alinha itens verticalmente */
+  justify-content: space-between; /* Distribui o espaço */
+  color: var(--text-light); /* Cor do texto */
+  margin: 1rem 0; /* Margem vertical */
+}
+
+h1 {
+  font-size: 2rem; /* Tamanho da fonte */
+  text-align: center; /* Alinhamento de texto */
+  margin-bottom: 2rem; /* Margem inferior */
+}
+
+input[type="search"] {
+  display: block; /* Define como bloco */
+  width: 100%; /* Largura total */
+  max-width: 300px; /* Largura máxima */
+  margin: 1rem auto 2rem; /* Centraliza e margem */
+  padding: 0.5rem 1rem; /* Preenchimento */
+  border: 1px solid #ccc; /* Borda */
+  border-radius: 0.5rem; /* Bordas arredondadas */
+  font-size: 1rem; /* Tamanho da fonte */
+}
+
+/* Estilos para o contêiner da tabela que terá o limitador e rolagem */
+.responsive-table-container {
+    max-width: 90%; /* Define a largura máxima do contêiner da tabela */
+    margin: 2rem auto; /* Centraliza o contêiner na página */
+    padding: 1rem; /* Padding interno do contêiner */
+    background-color: #fff; /* Fundo branco para a área da tabela */
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.03); /* Sombra para o contêiner */
+    border-radius: 0.5rem; /* Bordas arredondadas para o contêiner */
+    /* w3-responsive ja lida com o overflow para a rolagem horizontal */
+}
+
+/* Estilos para a tabela em si (usando classes w3-table-all e places-table) */
+.places-table {
+    width: 100%; /* A tabela ocupará 100% da largura do seu contêiner pai */
+    /* w3-table-all ja aplica border-collapse: collapse; e width: 100%; */
+}
+
+/* Remove os estilos de tabela que foram movidos ou são geridos pelo W3.CSS */
+table {
+  /* background-color, box-shadow, border-radius e overflow: hidden; foram movidos para .responsive-table-container */
+}
+
+thead {
+  background-color: var(--primary-color); /* Cor de fundo do cabeçalho da tabela */
+  color: #000; /* Cor do texto do cabeçalho */
+  text-align: left; /* Alinhamento de texto */
+}
+
+thead th {
+  padding: 1rem; /* Preenchimento */
+  font-weight: 700; /* Espessura da fonte */
+  font-size: 1rem; /* Tamanho da fonte */
+}
+
+tbody td {
+  padding: 1rem; /* Preenchimento */
+  border-bottom: 1px solid var(--extra-light); /* Borda inferior */
+  font-size: 0.95rem; /* Tamanho da fonte */
+}
+
+td.actions {
+  display: flex; /* Usa flexbox */
+  gap: 0.5rem; /* Espaçamento entre os botões de ação */
+}
+
+/* Botoes - w3-button ja tem base de estilo, suas classes adicionam cores */
+.btn {
+  padding: 0.4rem 0.8rem; /* Preenchimento */
+  border: none; /* Remove borda */
+  border-radius: 0.4rem; /* Bordas arredondadas */
+  font-weight: bold; /* Espessura da fonte */
+  cursor: pointer; /* Cursor de ponteiro */
+  font-size: 0.85rem; /* Tamanho da fonte */
+  transition: background-color 0.2s ease; /* Transição suave para o fundo */
+}
+
+.btn.edit {
+  background-color: var(--primary-color); /* Cor de fundo do botão de editar */
+  color: #000; /* Cor do texto do botão de editar */
+}
+
+.btn.delete {
+  background-color: #e63946; /* Cor de fundo do botão de deletar */
+  color: #fff; /* Cor do texto do botão de deletar */
+}
+
+.btn.edit:hover {
+  background-color: #e3c02a; /* Cor de fundo do botão de editar ao passar o mouse */
+}
+
+.btn.delete:hover {
+  background-color: #d62828; /* Cor de fundo do botão de deletar ao passar o mouse */
+}
+
+/* Estilos para o botão "Sair" e outros botões de navegação */
+.sign__in {
+  color: var(--white); /* Cor do texto */
+  background-color: var(--primary-color); /* Cor de fundo */
+}
+
+.sign__in:hover {
+  background-color: var(--primary-color-dark); /* Cor de fundo ao passar o mouse */
+}
+
+.nav__btns .btn {
+  padding: 0.75rem 1.5rem; /* Preenchimento */
+  outline: none; /* Remove contorno */
+  border: none; /* Remove borda */
+  font-size: 1rem; /* Tamanho da fonte */
+  white-space: nowrap; /* Não quebra linha */
+  border-radius: 10px; /* Bordas arredondadas */
+  transition: 0.3s; /* Transição suave */
+  cursor: pointer; /* Cursor de ponteiro */
+}

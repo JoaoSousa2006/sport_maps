@@ -1,0 +1,35 @@
+/* styleMap.css: Estilos específicos para a exibição do mapa e seu contêiner */
+
+.map-wrapper {
+  max-width: 40vw; /* Largura máxima do contêiner do mapa em relação à largura da viewport (40% da largura da tela) */
+  height: 70vh; /* Altura do contêiner do mapa em relação à altura da viewport (70% da altura da tela) */
+  overflow: hidden; /* Garante que qualquer conteúdo que exceda as dimensões seja cortado */
+  border-radius: 10px; /* Bordas arredondadas para o contêiner do mapa */
+  flex-shrink: 0; /* Impede que o item encolha abaixo de seu tamanho base em um flex container */
+  flex-grow: 1; /* Permite que o item cresça para ocupar espaço disponível em um flex container */
+  min-width: 300px; /* Largura mínima do contêiner do mapa, para garantir visibilidade em telas muito pequenas */
+  /* margin: 0 auto; - Removido pois o layout flexível do pai geralmente o centraliza */
+}
+
+/* Estilo para a div real do mapa Leaflet dentro do wrapper */
+#mapid {
+  width: 100%; /* Ocupa 100% da largura do seu elemento pai (.map-wrapper) */
+  height: 100%; /* Ocupa 100% da altura do seu elemento pai (.map-wrapper) */
+}
+
+/* Estilo para o mapa na pagina de listagem (lista_locais.php) */
+#map {
+  height: 400px; /* Altura fixa para o mapa */
+  width: 100%; /* Ocupa 100% da largura disponivel */
+  margin-bottom: 20px; /* Margem inferior para separar de outros elementos */
+  border-radius: 10px; /* Bordas arredondadas */
+}
+
+/* Media query para ajustar o mapa em telas menores */
+@media (max-width: 768px) {
+    .map-wrapper {
+        max-width: 90vw; /* Aumenta a largura máxima para ocupar mais espaço em telas pequenas */
+        height: 50vh; /* Ajusta a altura para telas menores */
+        margin-bottom: 20px; /* Adiciona um espaço abaixo do mapa quando empilhado */
+    }
+}

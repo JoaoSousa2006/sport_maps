@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet" />
+  <!-- Seu CSS personalizado -->
+  <link rel="stylesheet" href="root.css" />
+  <link rel="stylesheet" href="styleCad.css" />
+  <title>Cadastro de Locais</title>
+</head>
+
+<body>
+  <div class="container">
+    <div class="banner-side left-banner"></div>
+    <div class="content">
+      <div class="header">
+        <span class="back__btn">
+          <a href="index.html"><i class="ri-arrow-left-line"></i></a>
+        </span>
+      </div>
+      <div class="form__content">
+        <h3 class="form__title">Cadastro de Locais</h3>
+        <p class="form__subtitle">
+          Compartilhe conosco seus lugares favoritos para prática esportiva!
+        </p>
+        <form action="cad_local.php" method="POST">
+          <input type="text" placeholder="Nome do local" name="namePlace" required />
+          <input type="text" placeholder="Endereço" name="addressPlace" required />
+          <input type="email" placeholder="Email de contato" name="emailPlace" required />
+          <input type="tel" placeholder="Telefone para contato" name="phonePlace" required />
+          <select name="priceRange" required>
+            <option hidden>Faixa de preço</option>
+            <option value="gratuito">Gratuito</option>
+            <option value="até R$15">Até R$15,00</option>
+            <option value="de R$15 a R$30">Entre R$15,00 e R$30,00</option>
+            <option value="de R$30 a R$50">Entre R$30,00 e R$50,00</option>
+            <option value="+R$50">Mais de R$50,00</option>
+          </select>
+          <select name="sportType" required>
+            <option hidden>Esporte</option>
+            <option value="Skate">Skate</option>
+            <option value="Bicicleta">Bicicleta</option>
+            <option value="Corrida">Corrida</option>
+            <option value="Patins">Patins</option>
+            <option value="Quadra">Quadra</option>
+          </select>
+          <button class="submit__btn" type="submit">Cadastrar Local</button>
+        </form>
+      </div>
+    </div>
+    <div class="banner-side right-banner"></div>
+  </div>
+</body>
+
+</html>

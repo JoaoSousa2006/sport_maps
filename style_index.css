@@ -1,0 +1,544 @@
+/* style_index.css: Estilos gerais para o corpo, links, navegação e páginas iniciais/detalhes */
+
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import url(root.css); /* Importa as variáveis de cores globais */
+
+* {
+  padding: 0; /* Remove o preenchimento padrão de todos os elementos */
+  margin: 0; /* Remove a margem padrão de todos os elementos */
+  box-sizing: border-box; /* Garante que padding e border sejam incluídos na largura/altura do elemento */
+}
+
+img {
+  display: flex; /* Define a imagem como um elemento flexível */
+  width: 100%; /* A imagem ocupa a largura total do seu contêiner */
+}
+
+a {
+  text-decoration: none; /* Remove o sublinhado padrão dos links */
+  transition: 0.3s; /* Adiciona uma transição suave de 0.3 segundos para propriedades alteráveis */
+}
+
+body {
+  font-family: "Poppins", sans-serif; /* Define a fonte principal para o corpo */
+}
+
+/* --- Navegação --- */
+nav {
+  position: fixed; /* Fixa a barra de navegação no topo da viewport */
+  isolation: isolate; /* Cria um novo contexto de empilhamento para z-index */
+  width: 100%; /* A navegação ocupa a largura total */
+  z-index: 9; /* Garante que a navegação esteja acima de outros elementos */
+}
+
+.nav__header {
+  padding: 1rem; /* Preenchimento interno para o cabeçalho da navegação */
+  width: 100%; /* Ocupa a largura total */
+  display: flex; /* Usa flexbox para layout */
+  align-items: center; /* Alinha itens verticalmente ao centro */
+  justify-content: space-between; /* Distribui o espaço uniformemente entre os itens */
+  background-color: var(--primary-color); /* Cor de fundo do cabeçalho da navegação */
+}
+
+.nav__logo a {
+  font-size: 1.75rem; /* Tamanho da fonte para o logo */
+  font-weight: 400; /* Espessura da fonte */
+  /* font-family: var(--header-font); - Removido pois nao encontrei a definicao de --header-font */
+  color: var(--white); /* Cor do texto do logo */
+}
+
+.nav__logo a span {
+  color: var(--text-dark); /* Sobrescreve a cor do span dentro do logo */
+}
+
+.nav__menu__btn {
+  font-size: 1.5rem; /* Tamanho da fonte para o ícone do menu */
+  color: var(--white); /* Cor do ícone do menu */
+  cursor: pointer; /* Muda o cursor para indicar que é clicável */
+}
+
+.nav__links {
+  position: absolute; /* Posiciona os links absolutamente em relação ao pai */
+  top: 64px; /* Começa abaixo do cabeçalho da navegação */
+  left: 0; /* Alinha à esquerda */
+  width: 100%; /* Ocupa a largura total */
+  padding: 2rem; /* Preenchimento interno */
+  list-style: none; /* Remove os marcadores de lista */
+  display: flex; /* Usa flexbox para layout */
+  align-items: center; /* Alinha itens verticalmente ao centro */
+  justify-content: center; /* Centraliza itens horizontalmente */
+  flex-direction: column; /* Organiza itens em coluna */
+  gap: 2rem; /* Espaçamento entre os itens */
+  background-color: var(--primary-color); /* Cor de fundo dos links da navegação */
+  transition: 0.5s; /* Transição suave para transformações */
+  z-index: -1; /* Coloca os links atrás do cabeçalho */
+  transform: translateY(-100%); /* Esconde os links inicialmente (para animação) */
+}
+
+.nav__links.open {
+  transform: translateY(0); /* Mostra os links quando a classe 'open' é adicionada */
+}
+
+.nav__links a {
+  font-weight: 500; /* Espessura da fonte para os links */
+  color: var(--white); /* Cor do texto dos links */
+}
+
+.nav__links a:hover {
+  color: var(--text-dark); /* Cor do texto dos links ao passar o mouse */
+}
+
+.nav__btns {
+  display: none; /* Esconde os botões de navegação por padrão (para mobile) */
+}
+
+/* --- Detalhes do Local (LocalDetalhes.html) --- */
+.place__container {
+  display: flex; /* Usa flexbox para layout */
+  justify-content: space-between; /* Distribui o espaço entre os itens */
+  align-items: flex-start; /* Alinha itens ao topo */
+  padding: 2rem; /* Preenchimento interno */
+  gap: 2rem; /* Espaçamento entre os itens */
+  width: 100%; /* Ocupa a largura total */
+}
+
+.local__details,
+.comments__section {
+  width: 50%; /* Cada seção ocupa 50% da largura */
+  background-color: #ffffff; /* Cor de fundo */
+  padding: 1rem; /* Preenchimento interno */
+  border-radius: 0.5rem; /* Bordas arredondadas */
+  box-shadow: 0 0 10px rgba(0,0,0,0.05); /* Sombra suave */
+}
+
+.comments__section {
+  display: flex; /* Usa flexbox */
+  flex-direction: column; /* Organiza itens em coluna */
+  gap: 1rem; /* Espaçamento entre os comentários */
+  overflow-y: auto; /* Adiciona rolagem vertical se o conteúdo exceder */
+}
+
+.comment {
+  display: block; /* Define como bloco */
+  padding: 0.5rem; /* Preenchimento interno */
+  border-bottom: 1px solid #ccc; /* Linha divisória entre comentários */
+}
+
+/* --- Cabeçalho da Página Inicial (index.html) --- */
+.header__container {
+  max-width: var(--max-width); /* Largura máxima (assumindo que --max-width existe em root.css ou é um valor definido) */
+  margin: auto; /* Centraliza o contêiner */
+  padding-block: 0rem; /* Preenchimento vertical */
+  padding-inline: 1rem; /* Preenchimento horizontal */
+  display: grid; /* Usa CSS Grid para layout */
+  gap: 2rem; /* Espaçamento entre os itens do grid */
+  overflow-x: hidden; /* Esconde qualquer conteúdo que exceda horizontalmente */
+  
+  /* Adicionados para responsividade (substituindo os estilos inline antigos) */
+  display: flex; /* Transforma em flexbox para alinhamento inicial */
+  align-items: center; /* Alinha os itens verticalmente ao centro */
+  justify-content: space-around; /* Distribui o espaço uniformemente */
+  padding: 20px; /* Preenchimento geral */
+  flex-wrap: wrap; /* Permite que os itens quebrem a linha */
+}
+
+.header__image {
+  position: relative; /* Posiciona a imagem relativamente para posicionar elementos filhos */
+  isolation: isolate; /* Cria um novo contexto de empilhamento para z-index */
+  /* Removido max-width, height, overflow, border-radius inline do HTML e movido para styleMap.css */
+}
+
+.header__image::before {
+  position: absolute; /* Posiciona o pseudo-elemento absolutamente */
+  content: ""; /* Conteúdo vazio para o pseudo-elemento */
+  width: 100%; /* Largura total */
+  max-width: 550px; /* Largura máxima */
+  aspect-ratio: 1; /* Mantém proporção de aspecto quadrado */
+  top: 50%; /* Posiciona no centro vertical */
+  left: 50%; /* Posiciona no centro horizontal */
+  transform: translate(-50%, -50%); /* Centraliza usando transform */
+  background-image: url("assets/header-bg.png"); /* Imagem de fundo */
+  background-size: cover; /* Ajusta o tamanho da imagem para cobrir a área */
+  background-position: center center; /* Centraliza a imagem de fundo */
+  background-repeat: no-repeat; /* Não repete a imagem de fundo */
+  border-radius: 100%; /* Torna o pseudo-elemento circular */
+  opacity: 0.5; /* Opacidade */
+  z-index: -1; /* Coloca atrás de outros elementos */
+}
+
+.header__image img {
+  max-width: 520px; /* Largura máxima da imagem */
+  margin-inline: auto; /* Centraliza a imagem horizontalmente */
+}
+
+.header__image__card {
+  position: absolute; /* Posiciona o card absolutamente */
+  padding: 0.75rem 1rem; /* Preenchimento interno */
+  display: flex; /* Usa flexbox */
+  align-items: center; /* Alinha itens verticalmente */
+  gap: 10px; /* Espaçamento entre itens */
+  font-size: 1.1rem; /* Tamanho da fonte */
+  font-weight: 500; /* Espessura da fonte */
+  color: var(--text-dark); /* Cor do texto */
+  background-color: var(--white); /* Cor de fundo */
+  white-space: nowrap; /* Impede que o texto quebre linha */
+  border-radius: 5px; /* Bordas arredondadas */
+  box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2); /* Sombra */
+  z-index: 1; /* Coloca o card acima de outros elementos */
+}
+
+.header__image__card span {
+  font-size: 1.5rem; /* Tamanho da fonte para o span dentro do card */
+  font-weight: 600; /* Espessura da fonte */
+  color: var(--primary-color); /* Cor do texto */
+}
+
+.header__image__card-1 {
+  top: 25%; /* Posição vertical */
+  left: 0; /* Posição horizontal */
+  transform: translate(-50%, -50%); /* Centraliza o card */
+}
+
+.header__image__card-2 {
+  top: 10%; /* Posição vertical */
+  right: 2rem; /* Posição horizontal */
+  transform: translateY(-50%); /* Centraliza verticalmente */
+}
+
+.header__image__card-3 {
+  top: 60%; /* Posição vertical */
+  left: 0; /* Posição horizontal */
+  transform: translateY(-50%); /* Centraliza verticalmente */
+}
+
+.header__image__card-4 {
+  top: 70%; /* Posição vertical */
+  right: 0; /* Posição horizontal */
+  transform: translateY(-50%); /* Centraliza verticalmente */
+}
+
+.local__images {
+  margin-top: 2rem; /* Margem superior */
+  text-align: center; /* Alinhamento de texto */
+}
+
+.image__slider {
+  position: relative; /* Posiciona o slider relativamente */
+  max-width: 100%; /* Largura máxima */
+  display: flex; /* Usa flexbox */
+  align-items: center; /* Alinha itens verticalmente */
+  justify-content: center; /* Centraliza itens horizontalmente */
+  gap: 1rem; /* Espaçamento entre itens */
+}
+
+.image__slider img {
+  width: 100%; /* Largura total */
+  max-width: 500px; /* Largura máxima */
+  aspect-ratio: 4/3; /* Proporção de aspecto */
+  border-radius: 0.5rem; /* Bordas arredondadas */
+  object-fit: cover; /* A imagem cobre o contêiner */
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1); /* Sombra */
+}
+
+.image__slider button {
+  background-color: rgba(0,0,0,0.4); /* Cor de fundo com transparência */
+  color: white; /* Cor do texto */
+  border: none; /* Remove borda */
+  padding: 0.5rem 1rem; /* Preenchimento interno */
+  font-size: 1.5rem; /* Tamanho da fonte */
+  cursor: pointer; /* Cursor de ponteiro */
+  border-radius: 0.3rem; /* Bordas arredondadas */
+  transition: background 0.2s; /* Transição suave para o fundo */
+}
+
+.image__slider button:hover {
+  background-color: rgba(0,0,0,0.6); /* Cor de fundo ao passar o mouse */
+}
+
+.header__content h1 {
+  margin-bottom: 1rem; /* Margem inferior */
+  font-size: 5rem; /* Tamanho da fonte */
+  font-weight: 400; /* Espessura da fonte */
+  /* font-family: var(--header-font); - Removido pois nao encontrei a definicao de --header-font */
+  color: var(--text-dark); /* Cor do texto */
+  line-height: 5.5rem; /* Altura da linha */
+  text-align: center; /* Alinhamento de texto */
+}
+
+.header__content h1 span {
+  color: var(--primary-color); /* Cor do span dentro do h1 */
+}
+
+.header__content p {
+  margin-bottom: 2rem; /* Margem inferior */
+  columns: var(--text-light); /* Não é uma propriedade CSS válida, deveria ser 'color' */
+  line-height: 1.75rem; /* Altura da linha */
+  text-align: center; /* Alinhamento de texto */
+}
+.header__content p { /* Correção: use 'color' */
+  margin-bottom: 2rem; /* Margem inferior */
+  color: var(--text-light); /* Cor do texto */
+  line-height: 1.75rem; /* Altura da linha */
+  text-align: center; /* Alinhamento de texto */
+}
+
+
+.header__content form {
+  margin-bottom: 4rem; /* Margem inferior */
+  padding: 1.5rem; /* Preenchimento interno */
+  display: flex; /* Usa flexbox */
+  align-items: center; /* Alinha itens verticalmente */
+  justify-content: space-between; /* Distribui o espaço */
+  flex-direction: column; /* Organiza em coluna */
+  gap: 1rem 0; /* Espaçamento entre itens */
+  border-radius: calc(1rem + 10px); /* Bordas arredondadas com cálculo */
+  box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.1); /* Sombra */
+}
+
+
+.header__content .input__row {
+  width: 100%; /* Largura total */
+  display: flex; /* Usa flexbox */
+  align-items: center; /* Alinha itens verticalmente */
+  gap: 1rem; /* Espaçamento entre itens */
+  flex: 1; /* Permite que o item cresça/encolha */
+}
+
+.header__content .input__group {
+  flex: 1; /* Permite que o grupo cresça/encolha */
+}
+
+.header__content .input__group h5 {
+  margin-bottom: 5px; /* Margem inferior */
+  font-size: 0.9rem; /* Tamanho da fonte */
+  font-weight: 500; /* Espessura da fonte */
+  color: var(--text-light); /* Cor do texto */
+}
+
+.header__content .input__group > div {
+  display: flex; /* Usa flexbox */
+  align-items: center; /* Alinha itens verticalmente */
+  gap: 10px; /* Espaçamento entre itens */
+}
+
+.header__content input {
+  width: 100%; /* Largura total */
+  outline: none; /* Remove contorno ao focar */
+  border: none; /* Remove borda */
+  font-size: 1rem; /* Tamanho da fonte */
+  background-color: transparent; /* Fundo transparente */
+}
+
+.header__content input::placeholder {
+  font-weight: 600; /* Espessura da fonte para o placeholder */
+  color: var(--text-dark); /* Cor do texto do placeholder */
+}
+
+.header__content .input__group span {
+  font-size: 1.1rem; /* Tamanho da fonte */
+  font-weight: 600; /* Espessura da fonte */
+  color: var(--primary-color); /* Cor do texto */
+}
+
+.header__content button {
+  width: 100%; /* Largura total */
+  padding: 1rem 2rem; /* Preenchimento interno */
+  outline: none; /* Remove contorno ao focar */
+  border: none; /* Remove borda */
+  font-size: 1rem; /* Tamanho da fonte */
+  white-space: nowrap; /* Impede que o texto quebre linha */
+  color: var(--white); /* Cor do texto */
+  background-color: var(--primary-color); /* Cor de fundo */
+  border-radius: 10px; /* Bordas arredondadas */
+  transition: 0.3s; /* Transição suave */
+  cursor: pointer; /* Cursor de ponteiro */
+}
+
+.header__content button:hover {
+  background-color: var(--primary-color-dark); /* Cor de fundo ao passar o mouse */
+}
+
+.header__content .bar {
+  font-size: 0.9rem; /* Tamanho da fonte */
+  color: var(--text-light); /* Cor do texto */
+  text-align: center; /* Alinhamento de texto */
+}
+
+/* Media queries para responsividade */
+@media (width > 768px) {
+  nav {
+    position: static; /* Remove a posição fixa */
+    padding-block: 2rem 0; /* Preenchimento vertical */
+    padding-inline: 1rem; /* Preenchimento horizontal */
+    max-width: var(--max-width); /* Largura máxima */
+    margin-inline: auto; /* Centraliza */
+    display: flex; /* Usa flexbox */
+    align-items: center; /* Alinha itens verticalmente */
+    justify-content: space-between; /* Distribui o espaço */
+    gap: 2rem; /* Espaçamento entre itens */
+  }
+
+  .nav__header {
+    flex: 1; /* Permite que o cabeçalho cresça/encolha */
+    padding: 0; /* Remove preenchimento */
+    background-color: transparent; /* Fundo transparente */
+  }
+
+  .nav__logo a {
+    color: var(--text-dark); /* Cor do texto do logo */
+  }
+
+  .nav__logo a span {
+    color: var(--primary-color); /* Cor do span dentro do logo */
+  }
+
+  .nav__menu__btn {
+    display: none; /* Esconde o botão do menu em telas maiores */
+  }
+
+  .nav__links {
+    position: static; /* Remove a posição absoluta */
+    padding: 0; /* Remove preenchimento */
+    flex-direction: row; /* Organiza itens em linha */
+    background-color: transparent; /* Fundo transparente */
+    transform: none; /* Remove a transformação */
+  }
+
+  .nav__links a {
+    padding-block: 5px; /* Preenchimento vertical */
+    color: var(--text-dark); /* Cor do texto */
+    border-bottom: 4px solid transparent; /* Borda inferior transparente */
+  }
+
+  .nav__links a:hover {
+    border-color: var(--primary-color); /* Cor da borda inferior ao passar o mouse */
+  }
+
+  .nav__btns {
+    display: flex; /* Mostra os botões de navegação */
+    flex: 1; /* Permite que os botões cresçam/encolham */
+  }
+
+  .nav__btns .btn {
+    padding: 0.75rem 1.5rem; /* Preenchimento */
+    outline: none; /* Remove contorno */
+    border: none; /* Remove borda */
+    font-size: 1rem; /* Tamanho da fonte */
+    white-space: nowrap; /* Não quebra linha */
+    border-radius: 10px; /* Bordas arredondadas */
+    transition: 0.3s; /* Transição suave */
+    cursor: pointer; /* Cursor de ponteiro */
+  }
+
+  .sign__up {
+    color: var(--text-dark); /* Cor do texto */
+    background-color: transparent; /* Fundo transparente */
+  }
+
+  .sign__up:hover {
+    color: var(--primary-color); /* Cor do texto ao passar o mouse */
+  }
+
+  .sign__in {
+    color: var(--white); /* Cor do texto */
+    background-color: var(--primary-color); /* Cor de fundo */
+  }
+
+  .sign__in:hover {
+    background-color: var(--primary-color-dark); /* Cor de fundo ao passar o mouse */
+  }
+
+  .header__container {
+    padding-block: 2rem; /* Preenchimento vertical */
+    grid-template-columns: repeat(2, 1fr); /* Duas colunas com larguras iguais */
+    align-items: center; /* Alinha itens verticalmente */
+  }
+
+  .header__image {
+    grid-area: 1/2/2/3; /* Posiciona a imagem no grid (linha 1, coluna 2, abrangendo 1 linha e 1 coluna) */
+  }
+
+  .header__content :is(h1, p, .bar) {
+    text-align: left; /* Alinha texto à esquerda */
+  }
+}
+
+@media (width > 1024px) {
+  .header__content form {
+    flex-direction: row; /* Organiza o formulário em linha */
+  }
+
+  .header__content button {
+    width: fit-content; /* Largura se ajusta ao conteúdo */
+  }
+}
+
+.header__content {
+  overflow-y: hidden; /* Esconde o conteúdo que excede verticalmente */
+}
+
+/* Estilos de modal e comentários */
+.btn_comentar {
+  outline: none; /* Remove o contorno ao focar */
+  border: none; /* Remove a borda */
+  font-size: 1rem; /* Tamanho da fonte */
+  white-space: nowrap; /* Não quebra linha */
+  border-radius: 10px; /* Bordas arredondadas */
+  transition: 0.3s; /* Transição suave */
+  cursor: pointer; /* Cursor de ponteiro */
+  color: var(--text-dark); /* Cor do texto */
+  background-color: var(--primary-color); /* Cor de fundo */
+  padding: 10px 15px; /* Preenchimento interno */
+  margin: 10px 0; /* Margem */
+}
+
+.modal {
+  display: none; /* Esconde o modal por padrão */
+  position: fixed; /* Fixa o modal na viewport */
+  z-index: 1000; /* Garante que o modal esteja acima de outros elementos */
+  left: 0; /* Posição à esquerda */
+  top: 0; /* Posição no topo */
+  width: 100%; /* Largura total */
+  height: 100%; /* Altura total */
+  overflow: auto; /* Adiciona rolagem se o conteúdo exceder */
+  background-color: rgba(0,0,0,0.5); /* Fundo semi-transparente */
+}
+
+.modal.ativa {
+  display: block; /* Mostra o modal quando a classe 'ativa' é adicionada */
+}
+
+.modal-content {
+  background-color: #fff; /* Cor de fundo do conteúdo do modal */
+  margin: 10% auto; /* Margem superior e centraliza horizontalmente */
+  padding: 20px; /* Preenchimento interno */
+  border-radius: 10px; /* Bordas arredondadas */
+  width: 90%; /* Largura do conteúdo do modal */
+  max-width: 400px; /* Largura máxima do conteúdo do modal */
+  box-shadow: 0 2px 10px rgba(0,0,0,0.3); /* Sombra */
+}
+
+.fechar {
+  color: #aaa; /* Cor do ícone de fechar */
+  float: right; /* Flutua para a direita */
+  font-size: 24px; /* Tamanho da fonte */
+  font-weight: bold; /* Espessura da fonte */
+  cursor: pointer; /* Cursor de ponteiro */
+}
+
+.fechar:hover {
+  color: black; /* Cor do ícone de fechar ao passar o mouse */
+}
+
+/* Estilos para inputs e textareas dentro de form__content (usado em cadastros e modal de comentario) */
+.form__content input, textarea, select {
+  display: block; /* Define como bloco */
+  width: 100%; /* Largura total */
+  margin-bottom: 1rem; /* Margem inferior */
+  outline: none; /* Remove contorno */
+  border: none; /* Remove borda */
+  border-radius: 2px; /* Bordas arredondadas */
+  padding: 0.75rem; /* Preenchimento */
+  font-size: 1rem; /* Tamanho da fonte */
+  background-color: var(--extra-light); /* Cor de fundo */
+}

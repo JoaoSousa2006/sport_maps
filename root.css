@@ -7,3 +7,7 @@
   --extra-light: #f3f4f6; /* Cor de fundo muito clara, para seções com contraste suave */
   --background: #ffffff; /* Cor de fundo principal dos contêineres e cards */
 }
+
+h1{
+  font-size:10vw;
+}

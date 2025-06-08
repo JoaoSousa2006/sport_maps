@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,8 +7,12 @@
       href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css"
       rel="stylesheet"
     />
+        <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
     <link rel="stylesheet" href="style_index.css" />
+    <link rel="stylesheet" href="styleMap.css" />
     <title>Web Design Mastery | SoulTravel</title>
+
   </head>
   <body>
     <nav>
@@ -16,13 +20,13 @@
         <div class="nav__logo">
           <a href="">Sport<span>Maps</span>.</a>
         </div>
-        <div class="nav__menu__btn" id="menu-btn">
+        <div class="nav_menu_btn" id="menu-btn">
           <span><i class="ri-menu-line"></i></span>
         </div>
       </div>
       <ul class="nav__links" id="nav-links">
           <li><a href="cad_local.html">Adicionar Local</a></li>
-        <li><a href="locais.php">Destinos</a></li>
+        <li><a href="lista_locais.php">Buscar Locais</a></li>
       </ul>
       <div class="nav__btns">
         <!-- <a href="" class="btn sign__up">Sign Up</a> -->
@@ -33,31 +37,16 @@
       </div>
     </nav>
     <header class="header__container">
-      <div class="header__image">
-        <div class="header__image__card header__image__card-1">
-          <span><i class="ri-key-line"></i></span>
-          Hotel Booking
-        </div>
-        <div class="header__image__card header__image__card-2">
-          <span><i class="ri-passport-line"></i></span>
-          Flight Tickets
-        </div>
-        <div class="header__image__card header__image__card-3">
-          <span><i class="ri-map-2-line"></i></span>
-          Local Events
-        </div>
-        <div class="header__image__card header__image__card-4">
-          <span><i class="ri-guide-line"></i></span>
-          Tour Guide
-        </div>
-
+      <div style="max-width: 40vw; height: 70vh;overflow: hidden;border-radius: 10px;" class="header__image">
+      <div class="map-wrapper">
+        <div id="mapid"></div>
       </div>
+        </div>
+      </div> 
       <div class="header__content">
         <h1>LET'S GO!<br />THE <span>ADVENTURE</span> IS WAITING FOR YOU</h1>
-        <p style="max-width: 80%;">
-          Embark on Your Journey Today and Discover Uncharted Wonders Around the
-          World - Your Adventure Awaits with Exciting Experiences, Unforgettable
-          Memories, and Endless Opportunities
+        <p style="max-width: 85%;">
+          Encontre novos locais para a prática de seus esportes favoritos! Conhece algum espaço que merece mais reconhecimento? Compartilhe conosco!
         </p>
         <!-- <form action="/">
           <div class="input__row">
@@ -79,9 +68,17 @@
           <button type="submit">Search</button>
         </form> -->
     </div>
-    <div class="bar">
-      Copyright © 2024 Web Design Mastery. All rights reserved.
-    </div>
-    </header>
+  </header>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+      // Inicialize o mapa com o ID 'mapid'
+      var mymap = L.map('mapid').setView([-23.5505, -46.6333], 13); // Centro inicial para São Paulo
+
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '© OpenStreetMap contributors',
+      }).addTo(mymap);
+    </script>
       </body>
 </html>

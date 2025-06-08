@@ -5,8 +5,18 @@
   --text-dark: #1f2937; /* Cor escura para textos principais */
   --text-light: #6b7280; /* Cor mais clara para textos secundários ou menos importantes */
   --extra-light: #f3f4f6; /* Cor de fundo muito clara, para seções com contraste suave */
-  --background: #ffffff; /* Cor de fundo principal dos contêineres e cards */
+  --background: #2F2C43; /* Cor de fundo principal dos contêineres e cards */
 }
+
+/* Random colors: */
+/* 
+#24103D
+#35003A
+#320686
+#9563C3
+#8C79B2
+#2F2C43
+*/
 
 h1{
   font-size:7vw;

@@ -1,0 +1,20 @@
+:root {
+  --primary-color: #FAE033; 
+  --primary-color-dark: #7851A9; 
+  --text-dark: #1f2937; 
+  --text-light: #6b7280; 
+  --extra-light: #f3f4f6; 
+  --background: #2F2C43; 
+}
+h1{
+  font-size:10vw;
+  max-width: 70vw;
+  align-self: center;
+  text-align: center;
+  left: 5000px;
+}
+@media (width > 768px) {
+  h1{
+  font-size: 5rem;
+}
+}

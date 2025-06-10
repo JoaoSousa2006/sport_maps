@@ -9,7 +9,11 @@
   --uzi-hoodie: #5e2682;  /* Cor distintiva do capuz da Uzi */
   --visor-haze: #8c79b2;  /* Um tom mais claro do brilho do visor ou de uma névoa */
   --corrupted-oil: #512850;  /* Óleo de drone em um tom mais escuro e sutilmente 'corrompido' */
-
+  --worker-metallic: #c4c2cc; /* Metal dos Worker Drones ou estruturas de Copper-9 */
+  --visor-off: #e2e2e9; /* Cor do visor de um drone quando inativo/sem brilho */
+  --night-sky-copper9: #2c2b36; /* O tom escuro e arroxeado do céu de Copper-9 */
+  --disassembly-glow: #e7d57b; /* Brilho amarelo/dourado associado aos Disassembly Drones ou óleo fresco */
+  --rusty-metal: #3a383a; /* Metal escuro e desgastado ou partes mais sombrias de drones */
 }
 
 h1 {

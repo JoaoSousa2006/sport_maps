@@ -1,0 +1,205 @@
+DROP DATABASE IF EXISTS sport_maps;
+CREATE DATABASE sport_maps;
+USE sport_maps;
+
+DROP TABLE IF EXISTS tblUsers;
+CREATE TABLE tblUsers (
+    idUser INT AUTO_INCREMENT PRIMARY KEY,
+    NameUser VARCHAR(100) NOT NULL,
+    PasswordUser VARCHAR(20) NOT NULL,
+    EmailUser VARCHAR(191) UNIQUE NOT NULL,
+    nivel_acesso INT NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Tabela: Sports
+DROP TABLE IF EXISTS tblSports;
+CREATE TABLE tblSports (
+    idSport INT AUTO_INCREMENT PRIMARY KEY,
+    SportType VARCHAR(50) NOT NULL -- CORRIGIDO: Alterado de ENUM para VARCHAR(50)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Tabela: Places
+DROP TABLE IF EXISTS tblplaces;
+
+CREATE TABLE tblplaces (
+    idPlace INT AUTO_INCREMENT PRIMARY KEY,
+    NamePlace VARCHAR(100) NOT NULL,
+    AdressPlace TEXT NOT NULL UNIQUE, -- Mantido VARCHAR(1000) como no seu modelo
+    EmailPlace VARCHAR(500) NULL,
+    PhonePlace VARCHAR(20) NULL,
+    LatPlace DECIMAL(10, 7), -- Tipo de dado para latitude (corrigido para precisão)
+    LongPlace DECIMAL(10, 7), -- Tipo de dado para longitude (corrigido para precisão)
+    PricePlace VARCHAR(20),
+    SportType VARCHAR(50) NOT NULL -- CORRIGIDO: Alterado de ENUM para VARCHAR(50)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Tabela: Feedbacks
+DROP TABLE IF EXISTS tblFeedbacks;
+CREATE TABLE tblFeedbacks (
+    idFeedback INT AUTO_INCREMENT PRIMARY KEY,
+    idUser INT NOT NULL,
+    idPlace INT NOT NULL,
+    ContentFeedback text(10000) NOT NULL,
+    rating TINYINT NOT NULL CHECK (rating BETWEEN 1 AND 5),
+    FOREIGN KEY (idUser) REFERENCES tblUsers(idUser),
+    FOREIGN KEY (idPlace) REFERENCES tblPlaces(idPlace)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Tabela: placesScores
+-- DROP TABLE IF EXISTS placesScores;
+-- CREATE TABLE placesScores (
+--     idScore INT AUTO_INCREMENT PRIMARY KEY,
+--     idUser INT NOT NULL,
+--     idPlace INT NOT NULL,
+--     votes INT NOT NULL,
+--     UNIQUE KEY unique_vote (idUser, idPlace),
+--     FOREIGN KEY (idUser) REFERENCES tblUsers(idUser),
+--     FOREIGN KEY (idPlace) REFERENCES tblPlaces(idPlace)
+-- ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Inserção de usuários
+INSERT INTO tblUsers (NameUser, PasswordUser, EmailUser, nivel_acesso) VALUES
+('João Sousa', 'senha123', 'joao.sousa@example.com', 0),
+('Maria Oliveira', '123senha', 'maria.oliveira@example.com', 0),
+('Carlos Souza', 'minhasenha', 'carlos.souza@example.com', 0),
+('Ana Martins', 'senha321', 'ana.martins@example.com', 0),
+('@Admin Master', 'admin1234', 'admin@example.com', 1);
+
+-- Inserção de locais reais de prática esportiva
+INSERT INTO tblPlaces (NamePlace, AdressPlace, EmailPlace, PhonePlace, PricePlace, SportType, LatPlace, LongPlace) VALUES
+('Parque Ibirapuera', 'Av. Pedro Álvares Cabral - Vila Mariana, São Paulo - SP', 'contato@ibirapuera.org', '(11) 1234-5678', 'Gratuito', 'Corrida', -23.588333, -46.658890),
+('Praça Roosevelt', 'Praça Franklin Roosevelt - Consolação, São Paulo - SP', 'skate@rooseveltsp.gov', '(11) 8765-4321', 'Gratuito', 'Skate', -23.548117, -46.646180),
+('Parque da Cidade Sarah Kubitschek', 'SGAS 910, Brasília - DF', 'contato@parquedacidade.df.gov.br', '(61) 3342-1234', 'Gratuito', 'Bicicleta', -15.793889, -47.882778),
+('Arena Radialista Mário Helênio', 'R. José de Alencar - São Pedro, Juiz de Fora - MG', NULL, '(32) 3690-8300', 'R$15,00', 'Quadra', -21.737887, -43.344406),
+('Pista de Patinação do Parque Madureira', 'Parque Madureira - Rio de Janeiro - RJ', NULL, '(21) 2589-1234', 'Gratuito', 'Patins', -22.873215, -43.340669);
+
+
+INSERT INTO `tblplaces` (`idPlace`, `NamePlace`, `AdressPlace`, `EmailPlace`, `PhonePlace`, `LatPlace`, `LongPlace`, `PricePlace`, `SportType`) VALUES 
+(NULL, 'Academia Fitness Total', 'Rua das Acácias, 150, São Paulo', 'contato@fitnesstotal.com', '(11) 98765-4321', -23.561356, -46.656515, 99.90, 'Musculação'),
+(NULL, 'Centro Esportivo Olímpia', 'Av. Brasil, 2000, Rio de Janeiro', 'olimpia@centroesportivo.com', '(21) 91234-5678', -22.906847, -43.172897, 120.00, 'Natação'),
+(NULL, 'Quadras de Areia Sol & Mar', 'Orla de Copacabana, S/N, Rio de Janeiro', 'sol.mar@praia.com', '(21) 99876-1234', -22.971031, -43.185202, 75.00, 'Vôlei de Praia'),
+(NULL, 'Dojo da Paz Interior', 'Rua da Harmonia, 50, Belo Horizonte', 'paz.interior@dojo.com', '(31) 99111-2233', -19.920833, -43.937780, 80.00, 'Karatê'),
+(NULL, 'Pista de Skate Radical', 'Praça da Juventude, 30, Curitiba', 'radical@skatepark.com', '(41) 98888-7777', -25.428911, -49.267136, 50.00, 'Skate'),
+(NULL, 'Campo de Futebol Zico', 'Rua do Gol, 10, Salvador', 'zico@futebol.com', '(71) 99765-4321', -12.970387, -38.502931, 150.00, 'Futebol'),
+(NULL, 'Clube de Tênis Imperial', 'Av. das Palmeiras, 100, Porto Alegre', 'imperial@tenisclub.com', '(51) 98765-1122', -30.034647, -51.217658, 110.00, 'Tênis'),
+(NULL, 'Ginásio Poliesportivo Central', 'Rua Principal, 1234, Brasília', 'central@ginasio.com', '(61) 99999-0000', -15.780101, -47.929172, 60.00, 'Basquete'),
+(NULL, 'Centro Aquático Panamericano', 'Av. da Orla, S/N, Recife', 'panamericano@natacao.com', '(81) 98765-9988', -8.057838, -34.882897, 105.00, 'Natação'),
+(NULL, 'Arena Multiuso Global', 'Times Square, New York, USA', 'global@arena.com', '+1 212 555 0100', 40.758000, -73.985500, 200.00, 'Eventos Esportivos'),
+(NULL, 'Centro de Escalada Summit', 'Near Eiffel Tower, Paris, France', 'summit@climbing.fr', '+33 1 40 12 34 56', 48.858400, 2.294500, 130.00, 'Escalada'),
+(NULL, 'Estádio Wembley', 'Wembley Park, London, UK', 'info@wembleystadium.uk', '+44 20 8795 9000', 51.556000, -0.279600, 180.00, 'Futebol'),
+(NULL, 'Piscina Olímpica Nacional', 'Sydney Olympic Park, Sydney, Australia', 'contact@olympicpool.au', '+61 2 9765 0000', -33.844700, 151.062000, 95.00, 'Natação'),
+(NULL, 'Ginásio de Basquete Tokyo', 'Shibuya, Tokyo, Japan', 'tokyobball@gym.jp', '+81 3 1234 5678', 35.661700, 139.703800, 85.00, 'Basquete'),
+(NULL, 'Pista de Gelo Berlim', 'Tiergarten, Berlin, Germany', 'iceberlin@rink.de', '+49 30 1234 5678', 52.514700, 13.398300, 65.00, 'Patinação no Gelo'),
+(NULL, 'Clube de Golfe do Porto', 'Rua do Golf, Porto, Portugal', 'golf@porto.pt', '+351 22 123 4567', 41.157900, -8.629100, 160.00, 'Golfe'),
+(NULL, 'Academia de Boxe Chicago', 'Michigan Ave, Chicago, USA', 'chicago.boxing@mail.com', '+1 312 555 2345', 41.878100, -87.629800, 100.00, 'Boxe'),
+(NULL, 'Centro de Natação Dubai', 'Jumeirah Beach, Dubai, UAE', 'dubai.swim@email.com', '+971 4 123 4567', 25.204800, 55.270800, 140.00, 'Natação'),
+(NULL, 'Quadra de Tênis Roma', 'Colosseum Area, Rome, Italy', 'tennisrome@email.com', '+39 06 1234 5678', 41.902800, 12.496400, 90.00, 'Tênis'),
+(NULL, 'Estádio de Críquete Índia', 'Mumbai, India', 'cricketindia@stadium.in', '+91 22 1234 5678', 19.076000, 72.877700, 115.00, 'Críquete'),
+(NULL, 'Ginásio Fitness Global', 'Av. das Américas, 500, Rio de Janeiro', 'gymglobal@email.com', '(21) 91234-9876', -22.986847, -43.364500, 85.00, 'Fitness'),
+(NULL, 'Centro de Artes Marciais Dragão', 'Rua da Luta, 10, São Paulo', 'dragao@artesmarciais.com', '(11) 99876-5544', -23.548900, -46.638800, 70.00, 'Jiu-Jitsu'),
+(NULL, 'Parque Aquático Solar', 'Estrada do Sol, S/N, Fortaleza', 'solar@parqueaquatico.com', '(85) 99999-1111', -3.731900, -38.526700, 100.00, 'Recreação Aquática'),
+(NULL, 'Quadras de Tênis do Lago', 'Av. Beira Lago, 100, Brasília', 'lago@tenis.com', '(61) 98765-2233', -15.766700, -47.883300, 90.00, 'Tênis'),
+(NULL, 'Pista de Corrida Veloz', 'Rodovia do Corredor, Km 5, Campinas', 'veloz@pista.com', '(19) 91234-9988', -22.909900, -47.062600, 60.00, 'Atletismo'),
+(NULL, 'Clube da Vela Atlântico', 'Marina do Atlântico, Florianópolis', 'atlantico@vela.com', '(48) 98765-4433', -27.593500, -48.558500, 250.00, 'Vela'),
+(NULL, 'Academia de CrossFit Brutus', 'Rua do Brutus, 20, Porto Alegre', 'brutus@crossfit.com', '(51) 99887-6655', -30.027100, -51.229500, 110.00, 'CrossFit'),
+(NULL, 'Ginásio de Handebol Comunitário', 'Rua da União, 30, Recife', 'handebol@comunidade.com', '(81) 98765-1122', -8.063200, -34.870000, 55.00, 'Handebol'),
+(NULL, 'Centro de Badminton Velox', 'Av. Rapidez, 40, Curitiba', 'velox@badminton.com', '(41) 99999-2222', -25.433300, -49.271100, 45.00, 'Badminton'),
+(NULL, 'Estádio de Rugby Leões', 'Rua dos Leões, 50, São Paulo', 'leoes@rugby.com', '(11) 91111-2222', -23.560000, -46.630000, 130.00, 'Rugby'),
+(NULL, 'Piscina Recreativa Tropical', 'Av. da Praia, 10, Natal', 'tropical@piscina.com', '(84) 98765-9988', -5.794400, -35.198600, 65.00, 'Recreação Aquática'),
+(NULL, 'Academia Corpo e Mente', 'Rua da Serenidade, 70, Salvador', 'corpomente@academia.com', '(71) 99111-3344', -12.978000, -38.476000, 90.00, 'Yoga'),
+(NULL, 'Centro de Patinação Artística', 'Praça do Gelo, 80, Gramado', 'artistica@patinacao.com', '(54) 98765-5544', -29.373200, -50.870300, 70.00, 'Patinação Artística'),
+(NULL, 'Quadra de Vôlei de Areia Urbana', 'Parque da Cidade, S/N, Belo Horizonte', 'areia.urbana@volei.com', '(31) 99876-1122', -19.920800, -43.937700, 60.00, 'Vôlei de Praia'),
+(NULL, 'Ginásio de Judô Budo', 'Rua da Força, 90, Rio de Janeiro', 'budo@judo.com', '(21) 91234-7766', -22.906800, -43.172900, 85.00, 'Judô'),
+(NULL, 'Pista de Boliche Strike Force', 'Shopping Center, 10, São Paulo', 'strikeforce@boliche.com', '(11) 98765-1122', -23.547700, -46.633000, 40.00, 'Boliche'),
+(NULL, 'Clube de Squash Rápido', 'Rua da Agilidade, 110, Brasília', 'rapido@squash.com', '(61) 99999-3333', -15.780100, -47.929100, 75.00, 'Squash'),
+(NULL, 'Estádio de Tênis de Mesa', 'Av. da Precisão, 120, Curitiba', 'tenismesa@estadio.com', '(41) 98888-9999', -25.428900, -49.267100, 35.00, 'Tênis de Mesa'),
+(NULL, 'Centro de Yoga Zen', 'Praça da Meditação, 130, Florianópolis', 'zen@yoga.com', '(48) 98765-5555', -27.593500, -48.558500, 70.00, 'Yoga'),
+(NULL, 'Arena de Boxe Ouro', 'Rua do Punho, 140, Porto Alegre', 'ouro@boxe.com', '(51) 99887-1122', -30.027100, -51.229500, 100.00, 'Boxe'),
+(NULL, 'Piscina Aquecida Interior', 'Av. do Inverno, 150, Gramado', 'aquecida@piscina.com', '(54) 98765-1212', -29.373200, -50.870300, 80.00, 'Natação'),
+(NULL, 'Clube de Ciclismo Speed', 'Rodovia da Velocidade, Km 10, Campinas', 'speed@ciclismo.com', '(19) 91234-1122', -22.909900, -47.062600, 95.00, 'Ciclismo'),
+(NULL, 'Ginásio de Futsal Ágil', 'Rua da Agilidade, 160, Recife', 'agil@futsal.com', '(81) 98765-3344', -8.057800, -34.882800, 60.00, 'Futsal'),
+(NULL, 'Centro de Tiro com Arco', 'Fazenda do Alvo, 170, Natal', 'alvo@arco.com', '(84) 98765-5566', -5.794400, -35.198600, 90.00, 'Arco e Flecha'),
+(NULL, 'Academia de Ginástica Acrobática', 'Rua do Equilíbrio, 180, São Paulo', 'acrobatica@ginastica.com', '(11) 99999-4444', -23.548900, -46.638800, 110.00, 'Ginástica Acrobática'),
+(NULL, 'Pista de Kart Aventura', 'Autódromo da Aventura, S/N, Rio de Janeiro', 'aventura@kart.com', '(21) 91234-8877', -22.906800, -43.172900, 180.00, 'Kart'),
+(NULL, 'Estádio de Voleibol Profissional', 'Av. da Rede, 190, Belo Horizonte', 'profissional@voleibol.com', '(31) 99111-5566', -19.920800, -43.937700, 100.00, 'Voleibol'),
+(NULL, 'Clube de Hóquei no Gelo Ártico', 'Rua do Gelo, 200, Campinas', 'artico@hoquei.com', '(19) 91234-6677', -22.909900, -47.062600, 140.00, 'Hóquei no Gelo'),
+(NULL, 'Centro de Peteca Nacional', 'Parque da Peteca, 210, Brasília', 'nacional@peteca.com', '(61) 98765-7788', -15.780100, -47.929100, 50.00, 'Peteca'),
+(NULL, 'Quadra de Futebol Society', 'Rua do Campo, 220, Curitiba', 'society@futebol.com', '(41) 98888-1122', -25.428900, -49.267100, 90.00, 'Futebol Society'),
+(NULL, 'Academia de Natação Sincronizada', 'Piscina da Sincronia, 230, Florianópolis', 'sincronizada@natacao.com', '(48) 98765-9988', -27.593500, -48.558500, 150.00, 'Natação Sincronizada'),
+(NULL, 'Ginásio de Handebol Municipal', 'Rua do Ginásio, 240, Porto Alegre', 'municipal@handebol.com', '(51) 99887-3344', -30.027100, -51.229500, 65.00, 'Handebol'),
+(NULL, 'Pista de Atletismo Urbana', 'Av. da Corrida, 250, Recife', 'urbana@atletismo.com', '(81) 98765-6677', -8.057800, -34.882800, 70.00, 'Atletismo'),
+(NULL, 'Clube de Xadrez da Mente', 'Rua do Xadrez, 260, São Paulo', 'mente@xadrez.com', '(11) 99999-5555', -23.548900, -46.638800, 30.00, 'Xadrez'),
+(NULL, 'Centro de Escalada Boulder', 'Rua da Pedra, 270, Rio de Janeiro', 'boulder@escalada.com', '(21) 91234-7788', -22.906800, -43.172900, 100.00, 'Bouldering'),
+(NULL, 'Academia de CrossFit Força Total', 'Av. da Força, 280, Belo Horizonte', 'forcafull@crossfit.com', '(31) 99111-6677', -19.920800, -43.937700, 120.00, 'CrossFit'),
+(NULL, 'Ginásio de Ginástica Rítmica', 'Rua do Ritmo, 290, Brasília', 'ritmica@ginastica.com', '(61) 98765-8899', -15.780100, -47.929100, 95.00, 'Ginástica Rítmica'),
+(NULL, 'Piscina de Mergulho Profundo', 'Porto do Mergulho, 300, Curitiba', 'profundo@mergulho.com', '(41) 98888-2233', -25.428900, -49.267100, 200.00, 'Mergulho'),
+(NULL, 'Clube de Polo Aquático', 'Lago do Polo, 310, Florianópolis', 'polo@aquatico.com', '(48) 98765-1111', -27.593500, -48.558500, 130.00, 'Polo Aquático'),
+(NULL, 'Estádio de Rugby Profissional', 'Rua da Oval, 320, Porto Alegre', 'profissional@rugby.com', '(51) 99887-4455', -30.027100, -51.229500, 160.00, 'Rugby'),
+(NULL, 'Centro de Futevôlei Areia Fina', 'Praia da Areia, 330, Recife', 'areiafina@futevolei.com', '(81) 98765-7788', -8.057800, -34.882800, 70.00, 'Futevôlei'),
+(NULL, 'Academia de Boxe Ringue', 'Rua do Ringue, 340, Natal', 'ringue@boxe.com', '(84) 98765-8899', -5.794400, -35.198600, 95.00, 'Boxe'),
+(NULL, 'Ginásio de Ginástica Artística', 'Av. da Arte, 350, São Paulo', 'artistica@ginastica.com', '(11) 99999-6666', -23.548900, -46.638800, 105.00, 'Ginástica Artística'),
+(NULL, 'Pista de Skate Bowl', 'Parque do Bowl, 360, Rio de Janeiro', 'bowl@skate.com', '(21) 91234-9900', -22.906800, -43.172900, 55.00, 'Skate'),
+(NULL, 'Clube de Tênis de Mesa Ping Pong', 'Rua da Raquete, 370, Belo Horizonte', 'pingpong@tenismesa.com', '(31) 99111-7788', -19.920800, -43.937700, 40.00, 'Tênis de Mesa'),
+(NULL, 'Centro de Yoga e Pilates Harmonia', 'Praça da Calma, 380, Brasília', 'harmonia@yoga.com', '(61) 98765-9900', -15.780100, -47.929100, 80.00, 'Pilates'),
+(NULL, 'Quadra de Badminton Smash', 'Rua da Peteca, 390, Curitiba', 'smash@badminton.com', '(41) 98888-3344', -25.428900, -49.267100, 50.00, 'Badminton'),
+(NULL, 'Estádio de Hóquei de Campo', 'Campo do Hóquei, 400, Florianópolis', 'campo@hoquei.com', '(48) 98765-2233', -27.593500, -48.558500, 110.00, 'Hóquei de Campo'),
+(NULL, 'Piscina de Gelo Artificia', 'Rua da Neve, 410, Gramado', 'artificial@gelo.com', '(54) 98765-6677', -29.373200, -50.870300, 85.00, 'Nado no Gelo'),
+(NULL, 'Academia de Dança Ritmo', 'Av. do Ritmo, 420, São Paulo', 'ritmo@danca.com', '(11) 99999-7777', -23.548900, -46.638800, 70.00, 'Dança'),
+(NULL, 'Ginásio de Basquete Street', 'Rua da Cesta, 430, Rio de Janeiro', 'street@basquete.com', '(21) 91234-1122', -22.906800, -43.172900, 65.00, 'Basquete'),
+(NULL, 'Centro de Futsal Bola Cheia', 'Campo da Bola, 440, Belo Horizonte', 'bolacheia@futsal.com', '(31) 99111-8899', -19.920800, -43.937700, 75.00, 'Futsal'),
+(NULL, 'Quadra de Vôlei indoor', 'Rua da Quadra, 450, Brasília', 'indoor@volei.com', '(61) 98765-1100', -15.780100, -47.929100, 80.00, 'Voleibol'),
+(NULL, 'Pista de Corrida Cross Country', 'Parque do Corredor, 460, Curitiba', 'crosscountry@corrida.com', '(41) 98888-4455', -25.428900, -49.267100, 90.00, 'Corrida Cross Country'),
+(NULL, 'Clube de Esgrima Florete', 'Rua da Espada, 470, Florianópolis', 'florete@esgrima.com', '(48) 98765-3344', -27.593500, -48.558500, 100.00, 'Esgrima'),
+(NULL, 'Arena de Hóquei de Patins', 'Ginásio da Patinação, 480, Porto Alegre', 'patins@hoquei.com', '(51) 99887-5566', -30.027100, -51.229500, 90.00, 'Hóquei de Patins'),
+(NULL, 'Centro de Levantamento de Peso', 'Rua da Força Bruta, 490, Recife', 'peso@levantamento.com', '(81) 98765-8899', -8.057800, -34.882800, 85.00, 'Halterofilismo'),
+(NULL, 'Academia de Capoeira Dendê', 'Praça do Dendê, 500, Salvador', 'dende@capoeira.com', '(71) 99111-9900', -12.970387, -38.502931, 70.00, 'Capoeira'),
+(NULL, 'Piscina Olímpica Aberta', 'Parque da Água, 510, São Paulo', 'aberta@piscina.com', '(11) 99999-8888', -23.548900, -46.638800, 110.00, 'Natação'),
+(NULL, 'Ginásio de Sumô', 'Dojo do Sumô, 520, Rio de Janeiro', 'sumo@dojo.com', '(21) 91234-2233', -22.906800, -43.172900, 120.00, 'Sumô'),
+(NULL, 'Clube de Golfe Verde Grama', 'Campo do Golfe, 530, Belo Horizonte', 'verdegrama@golfe.com', '(31) 99111-0000', -19.920800, -43.937700, 200.00, 'Golfe'),
+(NULL, 'Quadra de Beach Tennis', 'Praia do Beach Tennis, 540, Florianópolis', 'beachtennis@praia.com', '(48) 98765-4455', -27.593500, -48.558500, 90.00, 'Beach Tennis'),
+(NULL, 'Centro de Boliche Urbano', 'Av. do Boliche, 550, Curitiba', 'urbano@boliche.com', '(41) 98888-5566', -25.428900, -49.267100, 45.00, 'Boliche'),
+(NULL, 'Pista de Patinação no Gelo Olímpica', 'Arena do Gelo, 560, Porto Alegre', 'olimpica@patinacao.com', '(51) 99887-6677', -30.027100, -51.229500, 100.00, 'Patinação no Gelo'),
+(NULL, 'Academia de Ginástica de Solo', 'Rua do Chão, 570, Recife', 'solo@ginastica.com', '(81) 98765-9900', -8.057800, -34.882800, 80.00, 'Ginástica de Solo'),
+(NULL, 'Ginásio de Tênis de Mesa Avançado', 'Av. do Tênis, 580, Natal', 'avancado@tenismesa.com', '(84) 98765-1122', -5.794400, -35.198600, 55.00, 'Tênis de Mesa'),
+(NULL, 'Clube de Ciclismo Montanha', 'Serra da Bike, 590, Gramado', 'montanha@ciclismo.com', '(54) 98765-7788', -29.373200, -50.870300, 110.00, 'Ciclismo de Montanha'),
+(NULL, 'Centro de Vôlei de Praia Profissional', 'Praia do Profissional, 600, Salvador', 'profissional@voleipraia.com', '(71) 99111-0000', -12.970387, -38.502931, 95.00, 'Vôlei de Praia'),
+(NULL, 'Academia de Pilates Flex', 'Rua da Flexibilidade, 610, São Paulo', 'flex@pilates.com', '(11) 99999-9999', -23.548900, -46.638800, 85.00, 'Pilates'),
+(NULL, 'Pista de Boliche Show', 'Avenida do Show, 620, Rio de Janeiro', 'show@boliche.com', '(21) 91234-3344', -22.906800, -43.172900, 50.00, 'Boliche'),
+(NULL, 'Ginásio de Badminton Master', 'Rua do Master, 630, Belo Horizonte', 'master@badminton.com', '(31) 99111-1122', -19.920800, -43.937700, 60.00, 'Badminton'),
+(NULL, 'Quadra de Tênis Rápida', 'Praça da Raquete, 640, Brasília', 'rapida@tenis.com', '(61) 98765-2233', -15.780100, -47.929100, 100.00, 'Tênis'),
+(NULL, 'Centro de Artes Marciais Samurai', 'Rua do Samurai, 650, Curitiba', 'samurai@artesmarciais.com', '(41) 98888-6677', -25.428900, -49.267100, 90.00, 'Muay Thai'),
+(NULL, 'Estádio de Futebol Americano', 'Campo do Touchdown, 660, Florianópolis', 'touchdown@futebolamericano.com', '(48) 98765-5566', -27.593500, -48.558500, 180.00, 'Futebol Americano'),
+(NULL, 'Piscina de Hidroginástica', 'Clube da Água, 670, Porto Alegre', 'hidro@piscina.com', '(51) 99887-7788', -30.027100, -51.229500, 70.00, 'Hidroginástica'),
+(NULL, 'Clube de Golfe Executivo', 'Campo Executivo, 680, Recife', 'executivo@golfe.com', '(81) 98765-0000', -8.057800, -34.882800, 250.00, 'Golfe'),
+(NULL, 'Ginásio de Vôlei de Praia Coberta', 'Arena da Coberta, 690, Natal', 'coberta@voleipraia.com', '(84) 98765-3344', -5.794400, -35.198600, 95.00, 'Vôlei de Praia'),
+(NULL, 'Centro de Escalada Clip & Go', 'Rua da Conquista, 700, Salvador', 'clipgo@escalada.com', '(71) 99111-2233', -12.970387, -38.502931, 110.00, 'Escalada'),
+(NULL, 'Academia de Dança de Salão', 'Salão da Dança, 710, São Paulo', 'salao@danca.com', '(11) 99999-1111', -23.548900, -46.638800, 80.00, 'Dança de Salão'),
+(NULL, 'Pista de Patins Rollers', 'Parque dos Patins, 720, Rio de Janeiro', 'rollers@patins.com', '(21) 91234-4455', -22.906800, -43.172900, 60.00, 'Patins'),
+(NULL, 'Ginásio de Futsal Kids', 'Rua da Criança, 730, Belo Horizonte', 'kids@futsal.com', '(31) 99111-3344', -19.920800, -43.937700, 50.00, 'Futsal'),
+(NULL, 'Quadra de Basquete 3x3', 'Praça do Jogo, 740, Brasília', '3x3@basquete.com', '(61) 98765-4455', -15.780100, -47.929100, 70.00, 'Basquete 3x3'),
+(NULL, 'Centro de Natação para Bebês', 'Piscina do Bebê, 750, Curitiba', 'bebes@natacao.com', '(41) 98888-7788', -25.428900, -49.267100, 75.00, 'Natação para Bebês'),
+(NULL, 'Estádio de Críquete Amador', 'Campo do Críquete, 760, Florianópolis', 'amador@cricket.com', '(48) 98765-6677', -27.593500, -48.558500, 65.00, 'Críquete'),
+(NULL, 'Clube de Squash Master', 'Rua do Squas, 770, Porto Alegre', 'master@squash.com', '(51) 99887-8899', -30.027100, -51.229500, 85.00, 'Squash'),
+(NULL, 'Piscina de Polo Aquático', 'Piscina do Polo, 780, Recife', 'polo@piscina.com', '(81) 98765-1122', -8.057800, -34.882800, 100.00, 'Polo Aquático'),
+(NULL, 'Academia de Lutas Mistas', 'Arena da Luta, 790, Natal', 'mistas@lutas.com', '(84) 98765-4455', -5.794400, -35.198600, 130.00, 'MMA'),
+(NULL, 'Ginásio de Bocha de Praia', 'Praça da Bocha, 800, Salvador', 'praia@bocha.com', '(71) 99111-5566', -12.970387, -38.502931, 40.00, 'Bocha'),
+(NULL, 'Centro de Tiro Esportivo', 'Clube do Tiro, 810, São Paulo', 'esportivo@tiro.com', '(11) 99999-2222', -23.548900, -46.638800, 160.00, 'Tiro Esportivo'),
+(NULL, 'Quadra de Vôlei Adaptado', 'Rua da Inclusão, 820, Rio de Janeiro', 'adaptado@volei.com', '(21) 91234-5566', -22.906800, -43.172900, 70.00, 'Vôlei Adaptado'),
+(NULL, 'Estádio de Beisebol Diamante', 'Campo do Diamante, 830, Belo Horizonte', 'diamante@beisebol.com', '(31) 99111-6677', -19.920800, -43.937700, 150.00, 'Beisebol'),
+(NULL, 'Pista de Bmx Urbano', 'Parque do BMX, 840, Brasília', 'urbano@bmx.com', '(61) 98765-7788', -15.780100, -47.929100, 85.00, 'BMX'),
+(NULL, 'Clube de Vela Lagoa', 'Lagoa da Vela, 850, Curitiba', 'lagoa@vela.com', '(41) 98888-8899', -25.428900, -49.267100, 190.00, 'Vela'),
+(NULL, 'Academia de Escalada Indoor Aventura', 'Rua da Aventura, 860, Florianópolis', 'indoor@aventura.com', '(48) 98765-9900', -27.593500, -48.558500, 120.00, 'Escalada Indoor'),
+(NULL, 'Ginásio de Ginástica para Todos', 'Praça da Ginástica, 870, Porto Alegre', 'todos@ginastica.com', '(51) 99887-1122', -30.027100, -51.229500, 60.00, 'Ginástica Geral'),
+(NULL, 'Centro de Hipismo Equestre', 'Hípica da Floresta, 880, Recife', 'equestre@hipismo.com', '(81) 98765-2233', -8.057800, -34.882800, 220.00, 'Hipismo'),
+(NULL, 'Piscina de Nado Sincronizado', 'Piscina da Sincronia, 890, Natal', 'sincronizado@nado.com', '(84) 98765-5566', -5.794400, -35.198600, 140.00, 'Nado Sincronizado'),
+(NULL, 'Clube de Peteca Profissional', 'Arena da Peteca, 900, Salvador', 'profissional@peteca.com', '(71) 99111-7788', -12.970387, -38.502931, 80.00, 'Peteca'),
+(NULL, 'Ginásio de Ginástica Rítmica Kids', 'Rua do Bambolê, 910, São Paulo', 'kids@ritmica.com', '(11) 99999-3333', -23.548900, -46.638800, 70.00, 'Ginástica Rítmica'),
+(NULL, 'Centro de Boliche Retrô', 'Av. do Fliperama, 920, Rio de Janeiro', 'retro@boliche.com', '(21) 91234-6677', -22.906800, -43.172900, 55.00, 'Boliche'),
+(NULL, 'Quadra de Badminton Duplas', 'Praça da Dupla, 930, Belo Horizonte', 'duplas@badminton.com', '(31) 99111-8899', -19.920800, -43.937700, 60.00, 'Badminton'),
+(NULL, 'Estádio de Tênis Saibro', 'Clube do Saibro, 940, Brasília', 'saibro@tenis.com', '(61) 98765-9900', -15.780100, -47.929100, 110.00, 'Tênis'),
+(NULL, 'Piscina de Águas Abertas', 'Lago do Nado, 950, Curitiba', 'abertas@piscina.com', '(41) 98888-0000', -25.428900, -49.267100, 90.00, 'Águas Abertas'),
+(NULL, 'Academia de Jiu-Jitsu Força Bruta', 'Rua do Dojo, 960, Florianópolis', 'forcabruta@jiujitsu.com', '(48) 98765-1122', -27.593500, -48.558500, 95.00, 'Jiu-Jitsu'),
+(NULL, 'Ginásio de Futebol Americano', 'Campo do Rugby, 970, Porto Alegre', 'futebolamericano@campo.com', '(51) 99887-2233', -30.027100, -51.229500, 170.00, 'Futebol Americano'),
+(NULL, 'Centro de Vôlei de Quadra', 'Rua da Rede, 980, Recife', 'quadra@volei.com', '(81) 98765-3344', -8.057800, -34.882800, 75.00, 'Voleibol'),
+(NULL, 'Pista de Corrida de Rua Noturna', 'Parque da Corrida, 990, Natal', 'noturna@corrida.com', '(84) 98765-6677', -5.794400, -35.198600, 50.00, 'Corrida de Rua'),
+(NULL, 'Clube de Mergulho Aventura Subaquática', 'Cais do Mergulho, 1000, Salvador', 'subaquatica@mergulho.com', '(71) 99111-8899', -12.970387, -38.502931, 280.00, 'Mergulho');

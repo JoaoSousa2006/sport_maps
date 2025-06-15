@@ -1,0 +1,30 @@
+.map-wrapper {
+  width: 90%; /* Ocupa 100% da largura da sua coluna */
+  height: 70vh; /* Mantém a altura responsiva */
+  overflow: hidden;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  /* Remova margin: 2rem auto; se ele estiver dentro de um flex/grid container que já o posiciona */
+  padding: 0; /* Ou ajuste conforme o espaçamento desejado */
+}
+
+#mapid {
+  z-index: 1;
+  width: 100%; /* Ocupa 100% da largura do seu pai (.map-wrapper) */
+  height: 100%; /* Ocupa 100% da altura do seu pai (.map-wrapper) */
+}
+
+/* Em telas maiores, dentro do grid, ele naturalmente ocupará sua 1fr */
+@media (width > 768px) {
+  .map-wrapper {
+    /* max-width e min-width podem ser menos críticos aqui, pois ele estará em uma coluna de grid */
+    /* Você pode ajustar o max-width se quiser que ele seja menor que 100% da coluna em telas muito grandes */
+    max-width: 100%; /* Garante que não ultrapasse a largura da coluna */
+    height: 60vh; /* Ajuste a altura se preferir em telas maiores */
+  }
+}
+@media (width > 1024px) {
+  .map-wrapper {
+    height: 65vh; /* Ou um valor fixo se preferir uma altura consistente em desktops */
+  }
+}

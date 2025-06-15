@@ -36,7 +36,7 @@ if (substr($username, 0, 1) === '@') {
         $_SESSION['username'] = $username;
         $_SESSION['password'] = $password;
         $_SESSION['nivel_acesso'] = $nivel_acesso;
-        header('Location: indexUser.php');
+        header('Location: index.html');
 
     }
 }

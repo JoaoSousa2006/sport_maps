@@ -1,0 +1,12 @@
+sequenceDiagram
+    participant Usuário
+    participant Frontend
+    participant Backend
+    participant Banco
+
+    Usuário->>Frontend: Preenche formulário de novo local
+    Frontend->>Backend: Envia dados do local
+    Backend->>Banco: INSERT INTO tblPlaces
+    Banco-->>Backend: Confirmação de inserção
+    Backend-->>Frontend: Retorno de sucesso
+    Frontend-->>Usuário: Mostra mensagem de sucesso

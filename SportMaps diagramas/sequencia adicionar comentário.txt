@@ -1,0 +1,12 @@
+sequenceDiagram
+    participant Usuário
+    participant Frontend
+    participant Backend
+    participant Banco
+
+    Usuário->>Frontend: Escreve comentário e nota
+    Frontend->>Backend: Envia dados do feedback
+    Backend->>Banco: INSERT INTO tblFeedbacks
+    Banco-->>Backend: Confirmação
+    Backend-->>Frontend: Feedback salvo com sucesso
+    Backend-->>Frontend: Atualizar seção de comentários

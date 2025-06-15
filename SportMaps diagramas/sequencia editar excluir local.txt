@@ -1,0 +1,12 @@
+sequenceDiagram
+    participant ADM
+    participant Frontend
+    participant Backend
+    participant Banco
+
+    ADM->>Frontend: Clica em editar/excluir local
+    Frontend->>Backend: Envia requisição com ID do local
+    Backend->>Banco: UPDATE ou DELETE conforme ação
+    Banco-->>Backend: Confirmação de ação
+    Backend-->>Frontend: Retorno de sucesso
+    Frontend-->>ADM: Exibe mensagem de sucesso

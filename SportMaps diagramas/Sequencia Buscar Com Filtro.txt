@@ -1,0 +1,12 @@
+sequenceDiagram
+    participant Usuário
+    participant Frontend
+    participant Backend
+    participant Banco
+
+    Usuário->>Frontend: Digita filtros na barra de busca
+    Frontend->>Backend: Envia requisição com filtros
+    Backend->>Banco: Executa SELECT filtrado
+    Banco-->>Backend: Retorna locais filtrados
+    Backend-->>Frontend: Envia dados para exibição
+    Frontend-->>Usuário: Exibe locais filtrados na tabela e mapa

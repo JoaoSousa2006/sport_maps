@@ -1,0 +1,53 @@
+classDiagram
+    class User {
+        +int idUser
+        +string NameUser
+        +string PasswordUser
+        +string EmailUser
+        +int nivel_acesso
+    }
+
+    class UserComum {
+        +int nivel_acesso = 0
+        +adicionarLocal()
+    }
+
+    class Admin {
+        +int nivel_acesso = 1
+        +alterarLocal()
+        +excluirLocal()
+    }
+
+    class Place {
+        +int idPlace
+        +string NamePlace
+        +text AdressPlace
+        +string EmailPlace
+        +string PhonePlace
+        +decimal LatPlace
+        +decimal LongPlace
+        +string PricePlace
+        +string SportType
+    }
+
+    class Sport {
+        +int idSport
+        +enum SportType
+    }
+
+    class Feedback {
+        +int idFeedback
+        +int idUser
+        +int idPlace
+        +text ContentFeedback
+        +int rating
+    }
+
+    User <|-- UserComum
+    User <|-- Admin
+
+    UserComum --> Place : adiciona
+    Admin --> Place : altera / exclui
+
+    User "1" --> "many" Feedback
+    Place "1" --> "many" Feedback

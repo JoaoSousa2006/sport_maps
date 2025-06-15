@@ -1,0 +1,12 @@
+sequenceDiagram
+    participant Usuário
+    participant Frontend
+    participant Backend
+    participant Banco
+
+    Usuário->>Frontend: Acessa a tela principal
+    Frontend->>Backend: Solicita todos os locais
+    Backend->>Banco: SELECT * FROM tblPlaces
+    Banco-->>Backend: Retorna lista de locais
+    Backend-->>Frontend: Envia dados
+    Frontend-->>Usuário: Mostra locais na tabela e mapa

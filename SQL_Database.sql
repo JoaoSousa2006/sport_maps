@@ -45,18 +45,6 @@ CREATE TABLE tblFeedbacks (
     FOREIGN KEY (idPlace) REFERENCES tblPlaces(idPlace)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Tabela: placesScores
--- DROP TABLE IF EXISTS placesScores;
--- CREATE TABLE placesScores (
---     idScore INT AUTO_INCREMENT PRIMARY KEY,
---     idUser INT NOT NULL,
---     idPlace INT NOT NULL,
---     votes INT NOT NULL,
---     UNIQUE KEY unique_vote (idUser, idPlace),
---     FOREIGN KEY (idUser) REFERENCES tblUsers(idUser),
---     FOREIGN KEY (idPlace) REFERENCES tblPlaces(idPlace)
--- ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
 -- Inserção de usuários
 INSERT INTO tblUsers (NameUser, PasswordUser, EmailUser, nivel_acesso) VALUES
 ('João Sousa', 'senha123', 'joao.sousa@example.com', 0),

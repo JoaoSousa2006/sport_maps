@@ -32,7 +32,7 @@ classDiagram
 
     class Sport {
         +int idSport
-        +enum SportType
+        +string SportType
     }
 
     class Feedback {

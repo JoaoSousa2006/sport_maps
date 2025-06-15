@@ -1,0 +1,639 @@
+/* ============================================================= */
+/* IMPORTS & BASE STYLES (Aplicado a todas as telas)             */
+/* ============================================================= */
+
+/* Base: Importação de fontes */
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+/* Base: Importação de variáveis de cor */
+@import url(root.css);
+@import url(base.css);
+
+/* Base: Estilo para o botão de comentar (genérico, usado em modal) */
+.btn_comentar {
+  outline: none;
+  border: none;
+  font-size: 1rem;
+  white-space: nowrap;
+  border-radius: 10px;
+  transition: 0.3s;
+  cursor: pointer;
+  color: var(--text-dark);
+  background-color: var(--primary-color);
+  padding: 10px 15px;
+  margin: 10px 0;
+}
+
+/* Base: Estilo geral para o modal (escondido por padrão) */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+}
+
+/* Base: Estilo para o modal quando ativo/visível */
+.modal.ativa {
+  display: flex;
+}
+
+/* Base: Estilo para o conteúdo dentro do modal */
+.modal-content {
+  background-color: var(--background);
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 90%;
+  max-width: 500px;
+  border-radius: 10px;
+  position: relative;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Base: Estilo para o botão de fechar do modal */
+.fechar {
+  color: var(--text-light);
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  cursor: pointer;
+}
+
+/* Base: Estilo de hover/focus para o botão de fechar */
+.fechar:hover,
+.fechar:focus {
+  color: var(--text-dark);
+  text-decoration: none;
+}
+
+/* Base: Estilo para o título dentro do modal */
+.modal-content h3 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: var(--text-dark);
+}
+
+/* Base: Estilo para o formulário dentro do modal */
+.modal-content form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Base: Estilo para inputs de texto e textareas dentro do modal */
+.modal-content input[type="text"],
+.modal-content textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid var(--extra-light);
+  border-radius: 5px;
+  font-size: 1rem;
+  color: var(--text-dark);
+  background-color: var(--extra-light);
+}
+
+/* Base: Estilo específico para textarea dentro do modal */
+.modal-content textarea {
+  resize: vertical;
+}
+
+/* Base: Estilo para o botão de comentar dentro do modal */
+.modal-content .btn_comentar {
+  width: 100%;
+  padding: 12px;
+  font-size: 1.1rem;
+  background-color: var(--primary-color);
+  color: var(--text-dark);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* Base: Estilo de hover para o botão de comentar dentro do modal */
+.modal-content .btn_comentar:hover {
+  background-color: #e3c02a;
+}
+
+/* Base: Estilo para o conteúdo do cabeçalho (geral) */
+.header__content {
+  overflow-y: hidden;
+}
+
+/* ============================================================= */
+/* MOBILE STYLES (Mobile First - Padrão para telas <= 768px)    */
+/* ============================================================= */
+
+/* Mobile: Estilo do container da navegação */
+nav {
+  position: fixed;
+  isolation: isolate;
+  width: 100%;
+  z-index: 9;
+  transition: 2s ease;
+}
+
+/* Mobile: Estilo do cabeçalho da navegação (topo) */
+.nav__header {
+  padding: 1rem;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--primary-color);
+}
+
+/* Mobile: Estilo da logo na navegação */
+.nav__logo a {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--text-dark);
+}
+
+/* Mobile: Estilo do span dentro da logo na navegação */
+.nav__logo a span {
+  color: var(--primary-color-dark);
+}
+
+/* Mobile: Estilo do botão de menu hambúrguer */
+.nav_menu_btn {
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+/* Mobile: Novo container para todos os itens do menu mobile */
+.nav__mobile_items {
+  position: absolute;
+  top: 60px;
+  /* Altura do nav__header */
+  left: 0;
+  width: 100%;
+  background-color: var(--yellow-glow);
+  display: flex;
+  flex-direction: column;
+  /* Empilha links e botões verticalmente */
+  align-items: center;
+  /* Centraliza horizontalmente */
+  gap: 1rem;
+  /* Espaço entre ul e div.nav__btns */
+  padding: 1rem 0;
+  transform: translateY(-100%);
+  transition: 0.3s ease-in-out;
+  visibility: hidden;
+  opacity: 0;
+  z-index: 100;
+}
+
+/* Mobile: Estado aberto do container de itens do menu mobile */
+.nav__mobile_items.open {
+  transform: translateY(0);
+  visibility: visible;
+  opacity: 1;
+}
+
+/* Mobile: Lista de links da navegação */
+.nav__links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  /* Links empilhados verticalmente */
+  gap: 1rem;
+  width: 100%;
+  /* Ocupa a largura do pai */
+  align-items: center;
+  /* Centraliza os links */
+}
+
+/* Mobile: Estilo dos links de navegação */
+.nav__links a,
+.sign__up {
+  color: var(--primary-color-dark);
+  /* Base do primeiro bloco */
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  /* Base do primeiro bloco */
+  width: fit-content;
+  /* Base do primeiro bloco */
+  padding-block: 5px;
+  /* Corrigido de --extra-dark para --text-dark */
+  border-bottom: 4px solid transparent;
+  width: auto;
+  /* Sobrescreve a largura */
+}
+
+/* Mobile: Estilo de hover para links de navegação */
+.nav__links a:hover,
+.sign__up:hover {
+  color: var(--uzi-hoodie);
+  border-color: var(--corrupted-oil);
+}
+
+/* Mobile: Container para os botões de ação na navegação */
+.nav__btns {
+  display: flex;
+  flex-direction: column;
+  /* Botões empilhados verticalmente */
+  gap: 1rem;
+  width: 100%;
+  /* Ocupa a largura do pai */
+  align-items: center;
+  /* Centraliza os botões */
+}
+
+/* Mobile: Estilo geral para botões na navegação */
+.nav__btns .btn {
+  padding: 0.75rem 1.5rem;
+  outline: none;
+  border: none;
+  font-size: 1rem;
+  white-space: nowrap;
+  border-radius: 10px;
+  transition: 0.3s;
+  cursor: pointer;
+  width: fit-content;
+  /* Ajusta a largura ao conteúdo */
+}
+
+/* Mobile: Estilo do botão "Cadastro" */
+/* .sign__up {
+  color: var(--text-dark);
+  background-color: transparent;
+} */
+
+/* Mobile: Estilo de hover para o botão "Cadastro" */
+/* .sign__up:hover {
+color: var(--               primary-color-dark);
+} */
+
+/* Mobile: Estilo do botão "Login" */
+.sign__in {
+  color: var(--worker-metallic);
+  background-color: var(--uzi-hoodie);
+}
+
+/* Mobile: Estilo de hover para o botão "Login" */
+.sign__in:hover {
+  color: var(--worker-chassis);
+  background-color: var(--corrupted-oil);
+}
+
+/* Mobile: Container principal do cabeçalho */
+.header__container {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  align-items: center;
+  gap: 2rem;
+  padding-top: 6rem;
+  padding-inline: 2rem 0;
+  text-align: center;
+  max-width: var(--max-width);
+  margin: auto;
+}
+
+/* Mobile: Estilo da imagem no cabeçalho */
+.header__image img {
+  border-radius: 1rem;
+}
+
+/* Mobile: Estilo do título principal do cabeçalho */
+.header__content h1 {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 2.5rem;
+  line-height: 1.2;
+  color: var(--text-light);
+}
+
+/* Mobile: Estilo do span dentro do título do cabeçalho */
+.header__content h1 span {
+  color: var(--primary-color);
+}
+
+/* Mobile: Estilo do parágrafo no cabeçalho */
+.header__content p {
+  line-height: 1.8;
+  color: var(--extra-light);
+  margin-block: 1rem;
+}
+
+/* Mobile: Estilo do formulário no cabeçalho */
+.header__content form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Mobile: Estilo da linha de inputs no formulário do cabeçalho */
+.header__content .input__row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-direction: column;
+  width: 100%;
+}
+
+/* Mobile: Estilo do grupo de inputs no formulário do cabeçalho */
+.header__content .input__group {
+  width: 100%;
+  max-width: 300px;
+}
+
+/* Mobile: Estilo do título dentro do grupo de inputs */
+.header__content .input__group h5 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin-bottom: 0.5rem;
+}
+
+/* Mobile: Estilo da div interna do grupo de inputs */
+.header__content .input__group div {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  background-color: var(--extra-light);
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+/* Mobile: Estilo de hover para a div interna do grupo de inputs */
+.header__content .input__group div:hover {
+  background-color: #e5e7eb;
+}
+
+/* Mobile: Estilo do ícone dentro do grupo de inputs */
+.header__content .input__group span {
+  font-size: 1.2rem;
+  color: var(--text-light);
+}
+
+/* Mobile: Estilo do input real dentro do grupo de inputs */
+.header__content .input__group input {
+  width: 100%;
+  outline: none;
+  border: none;
+  font-size: 1rem;
+  color: var(--text-dark);
+  background-color: transparent;
+}
+
+/* Mobile: Estilo do botão de ação no cabeçalho */
+.header__content button {
+  width: 100%;
+  padding: 0.75rem 1.5rem;
+  outline: none;
+  border: none;
+  font-size: 1rem;
+  white-space: nowrap;
+  border-radius: 10px;
+  transition: 0.3s;
+  cursor: pointer;
+  color: var(--text-dark);
+  background-color: var(--primary-color);
+}
+
+/* Mobile: Estilo de hover para o botão de ação no cabeçalho */
+.header__content button:hover {
+  background-color: #e3c02a;
+}
+
+
+/* ============================================================= */
+/*                              MAP                              */
+/* ============================================================= */
+.map-wrapper {
+  width: 90%; /* Ocupa 100% da largura da sua coluna */
+  height: 70vh; /* Mantém a altura responsiva */
+  overflow: hidden;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  /* Remova margin: 2rem auto; se ele estiver dentro de um flex/grid container que já o posiciona */
+  padding: 0; /* Ou ajuste conforme o espaçamento desejado */
+}
+
+/* Em telas maiores, dentro do grid, ele naturalmente ocupará sua 1fr */
+@media (width > 768px) {
+  .map-wrapper {
+    /* max-width e min-width podem ser menos críticos aqui, pois ele estará em uma coluna de grid */
+    /* Você pode ajustar o max-width se quiser que ele seja menor que 100% da coluna em telas muito grandes */
+    max-width: 100%; /* Garante que não ultrapasse a largura da coluna */
+    height: 60vh; /* Ajuste a altura se preferir em telas maiores */
+  }
+}
+@media (width > 1024px) {
+  .map-wrapper {
+    height: 65vh; /* Ou um valor fixo se preferir uma altura consistente em desktops */
+  }
+}
+/* ============================================================= */
+/* DESKTOP STYLES (Aplicado em telas com largura > 768px)        */
+/* ============================================================= */
+
+@media (width > 768px) {
+
+  /* Desktop: Estilo do container da navegação */
+  nav {
+    position: static;
+    margin-top: 1vh;
+    padding: 1rem 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  /* Desktop: Estilo do cabeçalho da navegação */
+  .nav__header {
+    padding: 0 3vw 0;
+    width: auto;
+    background-color: transparent;
+  }
+
+  /* Desktop: Estilo da logo na navegação */
+  .nav__logo a {
+    color: var(--text-light);
+  }
+
+  /* Desktop: Estilo do span dentro da logo na navegação */
+  .nav__logo a span {
+    color: var(--primary-color);
+  }
+
+  /* Desktop: Botão de menu hambúrguer (escondido) */
+  .nav_menu_btn {
+    display: none;
+  }
+
+  /* Desktop: Container de itens do menu mobile (oculto ou em linha) */
+  .nav__mobile_items {
+    position: static;
+    /* Remove o posicionamento absoluto */
+    transform: none;
+    /* Remove a transformação de translate */
+    visibility: visible;
+    /* Torna visível */
+    opacity: 1;
+    /* Garante opacidade total */
+    background-color: transparent;
+    /* Fundo transparente em desktop */
+    padding: 0;
+    flex-direction: row;
+    /* Volta a ser uma linha */
+    flex-grow: 1;
+    /* Permite que ocupe espaço */
+    justify-content: flex-end;
+    /* Empurra para a direita para alinhar os botões */
+  }
+
+  /* Desktop: Links em desktop */
+  .nav__links {
+    flex-direction: row;
+    /* Links na mesma linha */
+    gap: 2rem;
+    /* Espaço entre os links */
+    width: auto;
+    /* Largura automática */
+    padding: 0 0 0 25vw;
+    align-items: center;
+    margin-right: auto;
+    /* Empurra os links para a esquerda e deixa espaço para os botões */
+  }
+
+  /* Desktop: Estilo dos links de navegação */
+  .nav__links a,
+  .sign__up {
+    padding-block: 5px;
+    color: var(--worker-metallic);
+    border-bottom: 4px solid transparent;
+    width: auto;
+  }
+
+  /* Desktop: Estilo de hover para links de navegação */
+  .nav__links a:hover,
+  .sign__up:hover {
+    color: var(--primary-color);
+    border-color: var(--primary-color-dark);
+  }
+
+  /* Desktop: Botões em desktop */
+  .nav__btns {
+    flex-direction: row;
+    /* Botões na mesma linha */
+    gap: 1rem;
+    /* Espaço entre os botões */
+    width: auto;
+    /* Largura automática */
+    padding: 0 3vw;
+  }
+
+  /* Desktop: Estilo geral para botões na navegação */
+  .nav__btns .btn {
+    padding: 0.75rem 1.5rem;
+    outline: none;
+    border: none;
+    font-size: 1rem;
+    white-space: nowrap;
+    border-radius: 10px;
+    transition: 0.3s;
+    cursor: pointer;
+    width: auto;
+  }
+
+  /* Desktop: Estilo do botão "Login" */
+  .sign__in {
+    color: var(--text-dark);
+    background-color: var(--primary-color);
+    transition: 2s ease;
+  }
+
+  /* Desktop: Estilo de hover para o botão "Login" */
+  .sign__in:hover {
+    transition: 2s ease;
+  }
+}
+
+/* Desktop: Header Styles for Tablet and Desktop */
+@media (width > 768px) {
+
+  /* Desktop: Container principal do cabeçalho */
+  .header__container {
+    padding: 0 1rem 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    align-items: center;
+    text-align: left;
+  }
+
+  /* Desktop: Texto do cabeçalho */
+  .header__text {
+    grid-column: 1 / 2;
+  }
+
+  /* Desktop: Imagem/Mapa do cabeçalho */
+  .header__image {
+    grid-column: 2 / 3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* Desktop: Alinhamento de títulos e parágrafos no cabeçalho */
+  .header__text :is(h1, p, .bar) {
+    text-align: left;
+  }
+
+  /* Desktop: Título principal do cabeçalho */
+  .header__text h1 {
+    font-size: 5rem;
+    margin: 0 2vw 0;
+  }
+
+  /* Desktop: Parágrafo do cabeçalho */
+  .header__content p {
+    margin: 0 0 0 2vw;
+  }
+}
+
+/* ============================================================= */
+/* DESKTOP STYLES (Aplicado em telas com largura > 1024px)      */
+/* ============================================================= */
+@media (width > 1024px) {
+
+  /* Desktop: Formulário do cabeçalho em linha */
+  .header__content form {
+    flex-direction: row;
+  }
+
+  /* Desktop: Largura do botão no formulário do cabeçalho */
+  .header__content button {
+    width: fit-content;
+  }
+}
+
+/* Base: Estilo geral do conteúdo do cabeçalho (Overflow-y Hidden) */
+.header__content {
+  overflow-y: hidden;
+}
+
+/* Desktop: Modal styles for commenting */
+@media (width > 768px) {
+
+  /* Desktop: Largura do conteúdo do modal */
+  .modal-content {
+    width: 80%;
+  }
+}

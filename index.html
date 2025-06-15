@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+        <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
+    <link rel="stylesheet" href="style_index.css" />
+    <link rel="stylesheet" href="style2.css" />
+    <link rel="stylesheet" href="styleMap.css" />
+    <title>Web Design Mastery | SoulTravel</title>
+
+  </head>
+  <body>
+    <nav>
+      <div class="nav__header">
+        <div class="nav__logo">
+          <a href="">Sport<span>Maps</span>.</a>
+        </div>
+        <div class="nav_menu_btn" id="menu-btn">
+          <span><i class="ri-menu-line"></i></span>
+        </div>
+      </div>
+      <div class="nav__mobile_items" id="nav-mobile-items">
+          <ul class="nav__links" id="nav-links">
+              <li><a href="cad_local.html">Adicionar Local</a></li>
+              <li><a href="lista_locais.php">Buscar Locais</a></li>
+          </ul>
+          <div class="nav__btns">
+              <a href="cadUser.html" class="sign__up">Cadastro</a>
+              <a href="logIn.html" class="btn sign__in">Login</a>
+          </div>
+      </div>
+    </nav>
+<header class="header__container">
+  <div class="header__content header__text">
+    <h1>LET'S GO!<br />THE <span>ADVENTURE</span> IS WAITING FOR YOU</h1>
+    <p style="max-width: 85%;">
+      Encontre novos locais para a prática de seus esportes favoritos! Conhece
+      algum espaço que merece mais reconhecimento? Compartilhe conosco!
+    </p>
+  </div>
+  <div class="header__image">
+    <div class="map-wrapper">
+      <div id="mapid"></div>
+    </div>
+  </div>
+</header>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+      // Inicialize o mapa com o ID 'mapid'
+      var mymap = L.map('mapid').setView([-23.5505, -46.6333], 13); // Centro inicial para São Paulo
+
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: 'Desenvolvido com ©OpenStreetMap',
+      }).addTo(mymap);
+    </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const menuBtn = document.getElementById("menu-btn");
+        const navMobileItems = document.getElementById("nav-mobile-items"); // Novo elemento pai
+
+        if (menuBtn && navMobileItems) {
+          menuBtn.addEventListener("click", () => {
+            navMobileItems.classList.toggle("open");
+          });
+
+          document.addEventListener("click", (event) => {
+            if (
+              !navMobileItems.contains(event.target) &&
+              !menuBtn.contains(event.target) &&
+              navMobileItems.classList.contains("open")
+            ) {
+              navMobileItems.classList.remove("open");
+            }
+          });
+        }
+      });
+    </script>
+  </body>
+</html>

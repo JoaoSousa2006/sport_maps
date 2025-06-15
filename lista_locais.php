@@ -52,7 +52,7 @@ if ($result->num_rows > 0) {
     <div class="page-container">
         <header class="header">
             <span class="back__btn">
-                <a <?php if ($nivel_acesso == 1){echo "href='indexAdmin.html'";} else {echo "href='indexUser.php'";} ?> >
+                <a <?php if ($nivel_acesso == 1){echo "href='indexAdmin.html'";} else {echo "href='index.html'";} ?> >
                     <i class="ri-arrow-left-line"></i>
                 </a>
             </span>
@@ -61,7 +61,7 @@ if ($result->num_rows > 0) {
           
           <main class="content">
           <h1>Locais Cadastrados</h1>
-            <input id="search" type="search" placeholder="Buscar locais ou endereço..." onkeydown="handleSearch(event)"/>
+            <input class="search" id="search" type="search" placeholder="Buscar locais ou endereço..." onkeydown="handleSearch(event)"/>
             
             <div class="table-scroll-container">
                 <table class="places-table">

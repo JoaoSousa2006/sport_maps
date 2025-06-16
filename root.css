@@ -1,0 +1,19 @@
+/* root.css - Arquivo de Variáveis CSS */
+
+:root {
+  --primary-color: #FAE033;
+  --primary-color-dark: #7851A9;
+  --text-dark: #1f2937;
+  --text-light: #6b7280;
+  --extra-light: #f3f4f6;
+  --background: #2F2C43;    /* Escuridão do espaço / Armadura dos Disassembly Drones */
+  --worker-chassis: #e2e2e7;  /* Cor base dos Worker Drones / Neve de Copper-9 */
+  --uzi-hoodie: #5e2682;  /* Cor distintiva do capuz da Uzi */
+  --visor-haze: #8c79b2;  /* Um tom mais claro do brilho do visor ou de uma névoa */
+  --corrupted-oil: #512850;  /* Óleo de drone em um tom mais escuro e sutilmente 'corrompido' */
+  --worker-metallic: #c4c2cc; /* Metal dos Worker Drones ou estruturas de Copper-9 */
+  --visor-off: #e2e2e9; /* Cor do visor de um drone quando inativo/sem brilho */
+  --night-sky-copper9: #2c2b36; /* O tom escuro e arroxeado do céu de Copper-9 */
+  --yellow-glow: #E7D263; /* Brilho amarelo/dourado associado aos Disassembly Drones ou óleo fresco */
+  --max-width: 1200px; /* Variável para largura máxima de conteúdo */
+}

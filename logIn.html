@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styleCad.css" />
+    <title>Login de Usuário</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="container__right usuario_image">
+        <div class="image">
+          <h3>Descubra lugares novos!</h3>
+          <p></p>
+        </div>
+      </div>
+      <div class="container__left">
+        <div class="content">
+          <div class="header">
+            <span class="back__btn">
+              <a href="index.html"><i class="ri-arrow-left-line"></i></a>
+            </span>
+            <a href="cadUser.html"><span class="register"> Cadastrar-se </span></a>
+          </div>
+          <div class="form__content">
+            <h3 class="form__title">Login</h3>
+            <p class="form__subtitle">
+              Seja bem-vind@! Insira as informações a seguir:
+            </p>
+            <form action="log_in.php" method="POST">
+              <input type="text" placeholder="Nome de Usuário" name="username" required />
+              <input type="password" placeholder="Senha" name="password" required />
+              <button class="submit__btn" type="submit">Iniciar sessão</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

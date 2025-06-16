@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet" />
+  <!-- Seu CSS personalizado -->
+  <link rel="stylesheet" href="root.css" />
+  <link rel="stylesheet" href="styleCad.css" />
+  <title>Cadastro de Locais</title>
+  <style>
+    /* Estilos adicionais para mensagens de erro e carregamento, mantendo a aparência */
+    .error-message {
+      color: var(--yellow-glow); /* Cor da fonte para amarelo brilhante */
+      font-size: 0.9em;
+      margin-top: 5px;
+      text-align: center;
+      display: block; /* Garante que o span ocupe a largura total */
+    }
+    .loading-message {
+      color: var(--primary-color-dark); /* Usando uma variável do seu root.css */
+      font-size: 0.9em;
+      margin-top: 5px;
+      text-align: center;
+      display: block; /* Garante que o span ocupe a largura total */
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="banner-side left-banner"></div>
+    <div class="content">
+      <div class="header">
+        <span class="back__btn">
+          <a href="index.html"><i class="ri-arrow-left-line"></i></a>
+        </span>
+      </div>
+      <div class="form__content">
+        <h3 class="form__title">Cadastro de Locais</h3>
+        <p class="form__subtitle">
+          Compartilhe conosco seus lugares favoritos para prática esportiva!
+        </p>
+        <form id="placeForm" method="POST"> 
+          <input type="text" placeholder="Nome do local" name="namePlace" required />
+          <input type="text" placeholder="Endereço" name="addressPlace" id="addressPlace" required />
+          <span id="addressError" class="error-message"></span>
+          <span id="loadingMessage" class="loading-message" style="display:none;">Buscando coordenadas e CEP...</span>
+
+          <input type="text" name="horarioFuncionamento" placeholder="Horário de Funcionamento" required />
+          <input type="email" placeholder="Email de contato" name="emailPlace" required />
+          <input type="tel" placeholder="Telefone para contato" name="phonePlace" required />
+          <input type="number" name="priceRange" placeholder="Faixa de preço" required>
+          <input type="text" name="sportType" placeholder="Esporte praticado" required>
+          
+          <!-- Campos ocultos para latitude e longitude -->
+          <input type="hidden" name="LatPlace" id="latPlaceHidden">
+          <input type="hidden" name="LongPlace" id="lonPlaceHidden">
+
+          <button class="submit__btn" type="submit">Cadastrar Local</button>
+        </form>
+      </div>
+    </div>
+    <div class="banner-side right-banner"></div>
+  </div>
+
+  <script>
+    document.getElementById('placeForm').addEventListener('submit', async function(event) {
+      event.preventDefault(); // Impede o envio padrão do formulário
+
+      const addressInput = document.getElementById('addressPlace');
+      const addressError = document.getElementById('addressError');
+      const loadingMessage = document.getElementById('loadingMessage');
+      const latPlaceHidden = document.getElementById('latPlaceHidden');
+      const lonPlaceHidden = document.getElementById('lonPlaceHidden');
+
+      // Limpa mensagens de erro e carregamento anteriores
+      addressError.textContent = '';
+      loadingMessage.style.display = 'block'; // Mostra mensagem de carregamento
+
+      const address = addressInput.value.trim();
+
+      // Validação básica do endereço no frontend
+      if (!address) {
+        addressError.textContent = "Por favor, digite um endereço válido.";
+        loadingMessage.style.display = 'none';
+        return; // Impede o envio do formulário
+      }
+
+      // URL da API do Nominatim para geocodificação
+      // Adicionado 'addressdetails=1' para obter informações detalhadas, incluindo o CEP (postcode)
+      const nominatimUrl = `https://nominatim.openstreetmap.org/search?format=json&limit=1&addressdetails=1&q=${encodeURIComponent(address)}`;
+
+      try {
+        const response = await fetch(nominatimUrl);
+        const data = await response.json();
+
+        if (data && data.length > 0) {
+          const result = data[0];
+          
+          // Verifica se o CEP (postcode) existe na resposta e não está vazio
+          if (result.address && typeof result.address.postcode === 'string' && result.address.postcode.trim() !== '') {
+            const lat = parseFloat(result.lat);
+            const lon = parseFloat(result.lon);
+
+            // Preenche os campos ocultos com a latitude e longitude
+            latPlaceHidden.value = lat;
+            lonPlaceHidden.value = lon;
+
+            loadingMessage.style.display = 'none'; // Esconde mensagem de carregamento
+            
+            // Define a ação do formulário e o envia programaticamente
+            // O PHP agora receberá LatPlace e LongPlace via POST
+            this.action = 'cad_local.php'; 
+            this.submit(); 
+
+          } else {
+            // Endereço encontrado, mas sem CEP associado
+            // Mensagem de erro ajustada para ser mais útil
+            addressError.textContent = "Endereço encontrado, mas o CEP não foi detectado ou é inválido. Por favor, revise o endereço para incluir um CEP ou tente uma formatação diferente.";
+            loadingMessage.style.display = 'none';
+          }
+        } else {
+          addressError.textContent = "Endereço não encontrado. Tente ser mais específico (ex: 'Rua Exemplo, 123, Cidade, Estado, País').";
+          loadingMessage.style.display = 'none';
+        }
+      } catch (error) {
+        console.error("Erro ao buscar dados do endereço:", error);
+        addressError.textContent = "Ocorreu um erro ao processar a requisição de geocodificação. Verifique sua conexão ou tente novamente mais tarde.";
+        loadingMessage.style.display = 'none';
+      }
+    });
+  </script>
+</body>
+
+</html>

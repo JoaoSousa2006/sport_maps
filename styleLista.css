@@ -1,0 +1,175 @@
+/* style_cadastro.css: Estilos para as páginas de cadastro (usuario e local) e login */
+
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap");
+@import url(root.css);
+/* Importa as variáveis de cores globais */
+@import url(base.css);
+
+
+.page-container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: var(--text-light);
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--text-dark);
+    margin-bottom: 20px;
+}
+
+.header h1 {
+    margin: 0;
+    color: #333;
+}
+
+.exit {
+  padding: 0.75rem 1.5rem;
+  outline: none;
+  border: none;
+  font-size: 1rem;
+  white-space: nowrap;
+  border-radius: 10px;
+  transition: 0.3s;
+  cursor: pointer;
+  width: fit-content;
+  /* Ajusta a largura ao conteúdo */
+  color: var(--text-dark);
+  background-color: var(--yellow-glow);
+}
+
+/* Mobile: Estilo de hover para o botão "Login" */
+.exit:hover {
+  color: var(--worker-chassis);
+  background-color: var(--corrupted-oil);
+}
+
+.back__btn i {
+    margin-right: 5px;
+}
+
+.content {
+    padding: 20px 0;
+}
+
+#search {
+    width: calc(100% - 22px);
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1em;
+    color: var(--yellow-glow);
+}
+.search{
+    /* background: var(--yellow-glow); */
+}
+
+.actions {
+    white-space: nowrap;
+}
+
+.btn.edit,
+.btn.delete,
+.btn.view-map {
+    /* Adicionado estilo para o novo botão */
+    padding: 5px 10px;
+    margin-right: 5px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    color: white;
+    font-size: 1em;
+    /* Ajuste o tamanho da fonte */
+}
+
+.btn.edit {
+    background-color: #007bff;
+}
+
+.btn.delete {
+    background-color: #dc3545;
+}
+
+.btn.view-map {
+    background-color: #28a745;
+}
+/* --- NOVOS ESTILOS PARA ROLAGEM DA TABELA (INÍCIO) --- */
+.table-scroll-container {
+    max-height: 400px;
+    /* Defina a altura máxima desejada para a área de rolagem */
+    overflow-y: auto;
+    /* Habilita a rolagem vertical quando o conteúdo excede a altura máxima */
+    overflow-x: visible;
+    /* Evita rolagem horizontal */
+    border: 1px solid #ddd;
+    /* Opcional: Adiciona uma borda para delimitar a área de rolagem */
+    margin-bottom: 20px;
+    /* Espaço entre a tabela e o mapa, se houver */
+    border-radius: .5vw;
+    color: var(--text-dark)   
+}
+
+@media (width < 768px) {
+    .AtvP{
+        display: none;
+    }
+    .table-scroll-container {
+        overflow-x: scroll;
+        /* Ajusta a altura máxima para telas menores */
+    }
+    
+}
+
+.table-scroll-container a {
+    color: var(--text-dark);
+}
+
+.places-table {
+    /* Usa a classe da sua tabela existente */
+    width: 100%;
+    /* Faz a tabela ocupar 100% da largura do contêiner de rolagem */
+    border-collapse: collapse;
+    /* Para que as bordas da tabela e células se combinem */
+    margin-bottom: 0;
+    /* Remove margem inferior que possa causar barra de rolagem desnecessária */
+}
+
+.places-table th{
+    max-width: 1vw;
+}
+
+.places-table th,
+.places-table td {
+    width: fit-content;
+    overflow-x: hidden;
+    max-width: 2vw;
+    background: var(--yellow-glow);
+    padding: 10px;
+    /* Ajustado para um padding padrão, mas use o que você já tem em 'style_lista.css' se for diferente */
+    border: 1px solid #ddd;
+    /* Bordas das células */
+    text-align: left;
+    white-space: nowrap;
+    /* Evita que o texto quebre linhas, mantendo as colunas compactas */
+}
+
+.places-table thead {
+    position: sticky;
+    /* Fixa o cabeçalho ao rolar */
+    top: 0;
+    /* Fixa no topo do contêiner de rolagem */
+    background-color: #f8f9fa;
+    /* Cor de fundo do cabeçalho fixo (pode ajustar) */
+    z-index: 10;
+    /* Garante que o cabeçalho fique acima do conteúdo ao rolar */
+}
+
+/* --- NOVOS ESTILOS PARA ROLAGEM DA TABELA (FIM) --- */
+/* style_cadastro.css: Estilos para as páginas de cadastro (usuario e local) e login */

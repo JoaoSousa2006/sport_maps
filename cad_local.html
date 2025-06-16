@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet" />
+  <!-- Seu CSS personalizado -->
+  <link rel="stylesheet" href="root.css" />
+  <link rel="stylesheet" href="styleCad.css" />
+  <title>Cadastro de Locais</title>
+</head>
+
+<body>
+  <div class="container">
+    <div class="banner-side left-banner"></div>
+    <div class="content">
+      <div class="header">
+        <span class="back__btn">
+          <a href="index.html"><i class="ri-arrow-left-line"></i></a>
+        </span>
+      </div>
+      <div class="form__content">
+        <h3 class="form__title">Cadastro de Locais</h3>
+        <p class="form__subtitle">
+          Compartilhe conosco seus lugares favoritos para prática esportiva!
+        </p>
+        <form action="cad_local.php" method="POST">
+          <input type="text" placeholder="Nome do local" name="namePlace" required />
+          <input type="text" placeholder="Endereço" name="addressPlace" required />
+          <input type="text" name="horarioFuncionamento" placeholder="Horário de Funcionamento" required />
+          <input type="email" placeholder="Email de contato" name="emailPlace" required />
+          <input type="tel" placeholder="Telefone para contato" name="phonePlace" required />
+          <input type="number" name="priceRange" placeholder="Faixa de preço" required>
+          <input type="text" name="sportType" placeholder="Esporte praticado" required>
+          <button class="submit__btn" type="submit">Cadastrar Local</button>
+        </form>
+      </div>
+    </div>
+    <div class="banner-side right-banner"></div>
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styleDetalhes.css" />
+  <title>Web Design Mastery | SoulTravel</title>
+</head>
+
+<body>
+  <nav>
+    <div class="nav__header">
+      <div class="nav__logo">
+        <a href="">Sport<span>Maps</span>.</a>
+      </div>
+      <div class="mob nav__btns"> <a href="lista_locais.php" class="btn exit">Voltar</a>
+      </div>
+    </div>
+    <ul class="nav__links" id="nav-links">
+      </ul>
+          <div class="desk nav__btns">
+      <a href="lista_locais.php" class="btn exit">Voltar</a>
+    </div>
+  </nav>
+  <header class="header__container">
+    <div class="local__details">
+      <h1><span data-field="nome"></span></h1>
+      <p><strong>Endereço:</strong> <span data-field="endereco"></span></p>
+      <p><strong>Telefone:</strong> <span data-field="telefone"></span></p>
+      <p><strong>Esporte:</strong> <span data-field="esporte"></span></p>
+      <p><strong>Preço:</strong> <span data-field="preco"></span></p>
+      <p><strong>Descrição:</strong> Um ótimo local para a prática de skate com pistas de qualidade e segurança.</p>
+      <div class="stars__average">
+        <span id="averageStars"></span>
+      </div>
+
+      <!-- <div class="local__images">
+        <h3>Imagens do Local</h3>w
+        <div class="image__slider">
+          <button class="prev" onclick="mudarSlide(-1)">&#10094;</button>
+          <img id="imagemAtual" src="img/local1.jpg" alt="Imagem Indisponível" />
+          <button class="next" onclick="mudarSlide(1)">&#10095;</button>
+        </div>
+      </div> -->
+    </div>
+
+    <div class="comments__section">
+      <h2>Comentários</h2>
+      <button class="btn_comentar" onclick='abrirFormulario()'>Comentar</button>
+      <div class="comments__list">
+        <!-- Comentários serão carregados aqui dinamicamente -->
+      </div>
+    </div>
+    </div>
+    </div>
+  </header>
+  <div id="comentarioModal" class="modal">
+    <div class="modal-content">
+      <span class="fechar" onclick='fecharFormulario()'>&times;</span>
+      <h3>Novo Comentário</h3>
+      <form class="form__content" id="formComentario">
+        <textarea placeholder="Escreva seu comentário" rows="4" required name="comentario"></textarea>
+        <label for="rating">Avaliação:</label>
+        <select name="rating" id="rating" required>
+          <option value="">Selecione uma nota</option>
+          <option value="5">★★★★★</option>
+          <option value="4">★★★★☆</option>
+          <option value="3">★★★☆☆</option>
+          <option value="2">★★☆☆☆</option>
+          <option value="1">★☆☆☆☆</option>
+        </select>
+        <button type="submit" class="btn_comentar">Enviar</button>
+      </form>
+    </div>
+  </div>
+  <script>
+    // Código para carregar os detalhes do local
+    document.addEventListener('DOMContentLoaded', function () {
+      // Obtém os parâmetros da URL
+      const params = new URLSearchParams(window.location.search);
+      // Pega o valor do parâmetro idPlace
+      const idPlace = params.get('idPlace');
+
+      // Se houver um idPlace na URL
+      if (idPlace) {
+        // Faz uma requisição para obter os dados do local
+        fetch('getLocal.php?idPlace=' + idPlace)
+          .then(response => response.json()) // Converte a resposta para JSON
+          .then(data => {
+            // Se houver erro, exibe um alerta
+            if (data.erro) {
+              alert(data.erro);
+            } else {
+              // Preenche os campos da página com os dados recebidos
+              document.querySelector('.local__details [data-field="nome"]').textContent = data.NamePlace;
+              document.querySelector('.local__details [data-field="endereco"]').textContent = data.AdressPlace;
+              document.querySelector('.local__details [data-field="telefone"]').textContent = data.PhonePlace;
+              document.querySelector('.local__details [data-field="esporte"]').textContent = data.SportType;
+              document.querySelector('.local__details [data-field="preco"]').textContent = data.PricePlace;
+              // Continue para outros campos se necessário
+            }
+          });
+      }
+    });
+  </script>
+  <script>
+    // Array com os caminhos das imagens do slider
+    const imagens = [
+      "img/local1.jpg",
+      "img/local2.jpg",
+      "img/local3.jpg"
+    ];
+    // Índice da imagem atualmente exibida
+    let indiceAtual = 0;
+
+    // Função para mudar o slide de imagem
+    function mudarSlide(direcao) {
+      // Atualiza o índice conforme a direção (1 ou -1)
+      indiceAtual += direcao;
+      // Se passar do início, volta para a última imagem
+      if (indiceAtual < 0) indiceAtual = imagens.length - 1;
+      // Se passar do final, volta para a primeira imagem
+      if (indiceAtual >= imagens.length) indiceAtual = 0;
+      // Atualiza o src da imagem exibida
+      document.getElementById("imagemAtual").src = imagens[indiceAtual];
+    }
+  </script>
+  <script>
+    // Função para abrir o modal do formulário de comentário
+    function abrirFormulario() {
+      document.getElementById("comentarioModal").classList.add("ativa");
+    }
+
+    // Função para fechar o modal do formulário de comentário
+    function fecharFormulario() {
+      document.getElementById("comentarioModal").classList.remove("ativa");
+    }
+  </script>
+  <script>
+    // Código para comentários dinâmicos
+    document.addEventListener('DOMContentLoaded', function () {
+      // Adiciona evento de submit ao formulário de comentário
+      document.getElementById('formComentario').addEventListener('submit', function (e) {
+        e.preventDefault(); // Impede o envio padrão do formulário
+        const comentario = this.comentario.value; // Pega o valor do textarea
+        const params = new URLSearchParams(window.location.search);
+        const idPlace = params.get('idPlace');
+        // Envia o comentário via POST para o servidor
+        fetch('addComentario.php', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: `idPlace=${idPlace}&comentario=${encodeURIComponent(comentario)}`
+        })
+          .then(r => r.json()) // Converte resposta para JSON
+          .then(data => {
+            // Se sucesso, limpa o formulário, recarrega comentários e fecha o modal
+            if (data.sucesso) {
+              this.reset();
+              carregarComentarios();
+              fecharFormulario();
+            } else {
+              // Se erro, exibe alerta
+              alert(data.erro || 'Erro ao enviar comentário');
+            }
+          });
+      });
+
+      // Função para carregar comentários do servidor
+      function carregarComentarios() {
+        const params = new URLSearchParams(window.location.search);
+        const idPlace = params.get('idPlace');
+        fetch('getComentarios.php?idPlace=' + idPlace)
+          .then(r => r.json())
+          .then(comentarios => {
+            const lista = document.querySelector('.comments__list');
+            lista.innerHTML = '';
+            comentarios.forEach(c => {
+              const div = document.createElement('div');
+              div.className = 'comment';
+              div.innerHTML = `<p><strong>${c.NameUser}:</strong> ${c.ContentFeedback}</p>`;
+              lista.appendChild(div);
+            });
+          });
+      }
+
+      carregarComentarios(); // Carrega os comentários ao iniciar a página
+
+      // Adiciona evento de submit ao formulário de comentário
+      document.getElementById('formComentario').addEventListener('submit', function (e) {
+        e.preventDefault();
+        const comentario = this.comentario.value;
+        const rating = this.rating.value; // Pega a avaliação selecionada
+        if (!comentario || !rating) {
+          alert('Por favor, preencha o comentário e a avaliação.');
+          return;
+        }
+        const params = new URLSearchParams(window.location.search);
+        const idPlace = params.get('idPlace');
+        fetch('addComentario.php', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: `idPlace=${idPlace}&comentario=${encodeURIComponent(comentario)}&rating=${rating}`
+        })
+          .then(r => r.json())
+          .then(data => {
+            if (data.sucesso) {
+              this.reset();
+              carregarComentarios();
+              fecharFormulario();
+              atualizarMediaEstrelas(); // Atualiza a média de estrelas após enviar o comentário
+            } else {
+              alert(data.erro || 'Erro ao enviar comentário');
+            }
+          });
+      });
+      // Atualiza a média de estrelas ao carregar a página
+      atualizarMediaEstrelas();
+    });
+  </script>
+  <script>
+    function atualizarMediaEstrelas() {
+      const params = new URLSearchParams(window.location.search);
+      const idPlace = params.get('idPlace');
+      fetch('getAverageStars.php?idPlace=' + idPlace)
+        .then(response => response.json())
+        .then(data => {
+          if (data.average) {
+            document.getElementById('averageStars').innerHTML = 'Média: ' + renderStars(data.average);
+          } else {
+            document.getElementById('averageStars').innerHTML = 'Nenhuma avaliação ainda.';
+          }
+        });
+    }
+    function renderStars(avg) {
+      const full = Math.round(avg);
+      return '★'.repeat(full) +
+        '☆'.repeat(5 - full) +
+        ` (${avg.toFixed(1)})`;
+    }
+  </script>
+</body>
+
+</html>
